@@ -1,0 +1,204 @@
+<!-- Panel overlay -->
+@if (panelAbierto()) {
+  <div class="panel-overlay" (click)="cerrarPanel()"></div>
+}
+
+<!-- Slide panel -->
+<aside class="form-panel" [class.form-panel--open]="panelAbierto()">
+  <div class="form-panel__header">
+    <h3>{{ loteEditando() ? 'Editar lote' : 'Nuevo lote' }}</h3>
+    <button type="button" class="form-panel__close" (click)="cerrarPanel()">✕</button>
+  </div>
+
+  <form #f="ngForm" class="form-panel__body" (ngSubmit)="f.valid && guardar()" novalidate>
+
+    <div class="form-row">
+      <!-- Número -->
+      <div class="campo" [class.campo--error]="numRef.invalid && numRef.touched">
+        <label class="campo__label" for="numero">Número *</label>
+        <input class="campo__input" id="numero" name="numero" type="text"
+          placeholder="A-01" [(ngModel)]="form.numero"
+          #numRef="ngModel" required maxlength="20" />
+        @if (numRef.invalid && numRef.touched) {
+          <span class="campo__error">Requerido.</span>
+        }
+      </div>
+      <!-- Manzana -->
+      <div class="campo" [class.campo--error]="mzRef.invalid && mzRef.touched">
+        <label class="campo__label" for="manzana">Manzana *</label>
+        <input class="campo__input" id="manzana" name="manzana" type="text"
+          placeholder="A" [(ngModel)]="form.manzana"
+          #mzRef="ngModel" required maxlength="50" />
+        @if (mzRef.invalid && mzRef.touched) {
+          <span class="campo__error">Requerido.</span>
+        }
+      </div>
+    </div>
+
+    <div class="form-row">
+      <!-- Área -->
+      <div class="campo" [class.campo--error]="areaRef.invalid && areaRef.touched">
+        <label class="campo__label" for="area">Área (m²) *</label>
+        <input class="campo__input" id="area" name="area" type="number"
+          placeholder="200" [(ngModel)]="form.area"
+          #areaRef="ngModel" required min="1" />
+        @if (areaRef.invalid && areaRef.touched) {
+          <span class="campo__error">Mínimo 1 m².</span>
+        }
+      </div>
+      <!-- Precio -->
+      <div class="campo" [class.campo--error]="precRef.invalid && precRef.touched">
+        <label class="campo__label" for="precio">Precio (COP) *</label>
+        <input class="campo__input" id="precio" name="precio" type="number"
+          placeholder="45000000" [(ngModel)]="form.precio"
+          #precRef="ngModel" required min="0" />
+        @if (precRef.invalid && precRef.touched) {
+          <span class="campo__error">Requerido.</span>
+        }
+      </div>
+    </div>
+
+    <!-- Ubicación -->
+    <div class="campo" [class.campo--error]="ubRef.invalid && ubRef.touched">
+      <label class="campo__label" for="ubicacion">Ubicación *</label>
+      <input class="campo__input" id="ubicacion" name="ubicacion" type="text"
+        placeholder="Sector Norte, frente a vía principal"
+        [(ngModel)]="form.ubicacion" #ubRef="ngModel" required maxlength="300" />
+      @if (ubRef.invalid && ubRef.touched) {
+        <span class="campo__error">Requerida.</span>
+      }
+    </div>
+
+    <!-- Estado -->
+    <div class="campo">
+      <label class="campo__label" for="estado">Estado</label>
+      <select class="campo__select" id="estado" name="estado" [(ngModel)]="form.estado">
+        <option value="disponible">Disponible</option>
+        <option value="reservado">Reservado</option>
+        <option value="vendido">Vendido</option>
+      </select>
+    </div>
+
+    <!-- Descripción -->
+    <div class="campo">
+      <label class="campo__label" for="descripcion">Descripción</label>
+      <textarea class="campo__textarea" id="descripcion" name="descripcion"
+        rows="3" placeholder="Descripción del lote…"
+        [(ngModel)]="form.descripcion" maxlength="2000">
+      </textarea>
+    </div>
+
+    <!-- Imagen URL -->
+    <div class="campo">
+      <label class="campo__label" for="imagen">URL de imagen</label>
+      <input class="campo__input" id="imagen" name="imagen" type="url"
+        placeholder="https://…" [(ngModel)]="form.imagen" maxlength="500" />
+    </div>
+
+    <div class="form-row">
+      <!-- Latitud -->
+      <div class="campo">
+        <label class="campo__label" for="latitud">Latitud</label>
+        <input class="campo__input" id="latitud" name="latitud" type="number"
+          step="any" placeholder="4.6097" [(ngModel)]="form.latitud"
+          min="-90" max="90" />
+      </div>
+      <!-- Longitud -->
+      <div class="campo">
+        <label class="campo__label" for="longitud">Longitud</label>
+        <input class="campo__input" id="longitud" name="longitud" type="number"
+          step="any" placeholder="-74.0817" [(ngModel)]="form.longitud"
+          min="-180" max="180" />
+      </div>
+    </div>
+
+    <!-- Servicios -->
+    <div class="campo">
+      <label class="campo__label">Servicios disponibles</label>
+      <div class="servicios-checks">
+        @for (s of SERVICIOS; track s.icono) {
+          <label class="servicio-check">
+            <input type="checkbox"
+              [checked]="isServicioSeleccionado(s.icono)"
+              (change)="toggleServicio(s.icono)"
+            />
+            {{ s.nombre }}
+          </label>
+        }
+      </div>
+    </div>
+
+    @if (errorGuardar()) {
+      <p class="form-error">{{ errorGuardar() }}</p>
+    }
+
+    <div class="form-panel__actions">
+      <button type="button" class="btn-cancelar" (click)="cerrarPanel()">Cancelar</button>
+      <button type="submit" class="btn-guardar" [disabled]="guardando()">
+        {{ guardando() ? 'Guardando…' : (loteEditando() ? 'Actualizar' : 'Crear lote') }}
+      </button>
+    </div>
+
+  </form>
+</aside>
+
+<!-- ── Contenido principal ── -->
+<div class="lotes-admin">
+  <div class="lotes-admin__header">
+    <h2 class="lotes-admin__titulo">Lotes</h2>
+    <button class="btn-nuevo" (click)="abrirCrear()">+ Nuevo lote</button>
+  </div>
+
+  @if (error()) {
+    <div class="msg-error">
+      {{ error() }}
+      <button (click)="cargar()">Reintentar</button>
+    </div>
+  }
+
+  @if (cargando()) {
+    <p class="cargando-txt">Cargando lotes…</p>
+  } @else if (lotes().length === 0) {
+    <p class="vacio-txt">No hay lotes registrados. Crea el primero.</p>
+  } @else {
+    <div class="tabla-wrap">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Número</th>
+            <th>Manzana</th>
+            <th>Área</th>
+            <th>Precio</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (lote of lotes(); track lote.id) {
+            <tr [class.tabla__fila--eliminando]="loteParaEliminar() === lote.id">
+              <td class="tabla__num">{{ lote.numero }}</td>
+              <td>{{ lote.manzana }}</td>
+              <td>{{ lote.area }} m²</td>
+              <td>{{ formatPrecio(lote.precio) }}</td>
+              <td>
+                <span class="estado-badge estado-badge--{{ lote.estado }}">
+                  {{ lote.estado }}
+                </span>
+              </td>
+              <td class="tabla__acciones">
+                @if (loteParaEliminar() === lote.id) {
+                  <span class="confirmar-txt">¿Eliminar?</span>
+                  <button class="btn-confirmar" (click)="eliminar()">Sí</button>
+                  <button class="btn-cancelar-sm" (click)="cancelarEliminar()">No</button>
+                } @else {
+                  <button class="btn-editar" (click)="abrirEditar(lote)">Editar</button>
+                  <button class="btn-eliminar" (click)="confirmarEliminar(lote.id)">Eliminar</button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

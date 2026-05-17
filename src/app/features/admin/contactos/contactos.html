@@ -1,0 +1,75 @@
+<div class="contactos-admin">
+
+  <div class="contactos-admin__header">
+    <div>
+      <h2 class="contactos-admin__titulo">Mensajes de contacto</h2>
+      @if (noLeidosCount() > 0) {
+        <span class="badge-count">{{ noLeidosCount() }} sin leer</span>
+      }
+    </div>
+    <button
+      class="btn-filtro"
+      [class.btn-filtro--activo]="soloNoLeidos()"
+      (click)="toggleFiltro()">
+      {{ soloNoLeidos() ? 'Ver todos' : 'Solo no leídos' }}
+    </button>
+  </div>
+
+  @if (error()) {
+    <div class="msg-error">
+      {{ error() }}
+      <button (click)="cargar()">Reintentar</button>
+    </div>
+  }
+
+  @if (cargando()) {
+    <p class="cargando-txt">Cargando mensajes…</p>
+  } @else if (mensajes().length === 0) {
+    <p class="vacio-txt">
+      {{ soloNoLeidos() ? 'No hay mensajes sin leer.' : 'Aún no hay mensajes de contacto.' }}
+    </p>
+  } @else {
+    <div class="msg-list">
+      @for (m of mensajes(); track m.id) {
+        <div class="msg-card" [class.msg-card--leido]="m.leido">
+
+          <div class="msg-card__header">
+            <div class="msg-card__id-block">
+              @if (!m.leido) {
+                <span class="msg-card__dot" title="No leído"></span>
+              }
+              <strong class="msg-card__nombre">{{ m.nombre }}</strong>
+            </div>
+            <span class="msg-card__fecha">{{ formatFecha(m.createdAt) }}</span>
+          </div>
+
+          <div class="msg-card__contacto">
+            @if (m.telefono) {
+              <span>📞 {{ m.telefono }}</span>
+            }
+            @if (m.email) {
+              <span>✉️ {{ m.email }}</span>
+            }
+            @if (m.loteId) {
+              <span>🏗️ Lote #{{ m.loteId }}</span>
+            }
+          </div>
+
+          <p class="msg-card__mensaje">{{ m.mensaje }}</p>
+
+          @if (!m.leido) {
+            <div class="msg-card__footer">
+              <button class="btn-leido" (click)="marcarLeido(m.id)">
+                ✓ Marcar como leído
+              </button>
+            </div>
+          } @else {
+            <p class="msg-card__leido-label">Leído</p>
+          }
+
+        </div>
+      }
+    </div>
+  }
+
+</div>

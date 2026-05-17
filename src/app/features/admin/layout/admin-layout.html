@@ -1,0 +1,52 @@
+<div class="admin-shell">
+
+  @if (sidebarOpen()) {
+    <div class="admin-overlay" (click)="cerrarSidebar()"></div>
+  }
+
+  <aside class="admin-sidebar" [class.admin-sidebar--open]="sidebarOpen()">
+
+    <div class="admin-sidebar__brand">
+      <span>⚙️</span>
+      <span>LotesRB Admin</span>
+    </div>
+
+    <nav class="admin-nav">
+      <a routerLink="dashboard" routerLinkActive="admin-nav__link--active"
+         class="admin-nav__link" (click)="cerrarSidebar()">
+        <span class="admin-nav__icon">📊</span> Dashboard
+      </a>
+      <a routerLink="lotes" routerLinkActive="admin-nav__link--active"
+         class="admin-nav__link" (click)="cerrarSidebar()">
+        <span class="admin-nav__icon">🏗️</span> Lotes
+      </a>
+      <a routerLink="contactos" routerLinkActive="admin-nav__link--active"
+         class="admin-nav__link" (click)="cerrarSidebar()">
+        <span class="admin-nav__icon">📩</span> Contactos
+        @if (noLeidosCount() > 0) {
+          <span class="admin-nav__badge">{{ noLeidosCount() }}</span>
+        }
+      </a>
+    </nav>
+
+    <div class="admin-sidebar__footer">
+      <span class="admin-sidebar__user">{{ adminNombre }}</span>
+      <button class="admin-sidebar__logout" (click)="logout()">Salir</button>
+    </div>
+
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-header">
+      <button class="admin-header__menu" (click)="sidebarOpen.update(v => !v)" aria-label="Menú">
+        ☰
+      </button>
+      <span class="admin-header__brand">Panel de Administración</span>
+    </header>
+
+    <main class="admin-content">
+      <router-outlet />
+    </main>
+  </div>
+
+</div>

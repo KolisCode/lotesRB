@@ -1,0 +1,77 @@
+<div class="dashboard">
+
+  <h2 class="dashboard__titulo">Dashboard</h2>
+
+  <!-- Stats -->
+  @if (cargando()) {
+    <div class="dashboard__skeleton">Cargando estadísticas…</div>
+  } @else if (resumen()) {
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-card__num">{{ resumen()!.total }}</span>
+        <span class="stat-card__label">Total lotes</span>
+      </div>
+      <div class="stat-card stat-card--green">
+        <span class="stat-card__num">{{ resumen()!.disponibles }}</span>
+        <span class="stat-card__label">Disponibles</span>
+      </div>
+      <div class="stat-card stat-card--yellow">
+        <span class="stat-card__num">{{ resumen()!.reservados }}</span>
+        <span class="stat-card__label">Reservados</span>
+      </div>
+      <div class="stat-card stat-card--gray">
+        <span class="stat-card__num">{{ resumen()!.vendidos }}</span>
+        <span class="stat-card__label">Vendidos</span>
+      </div>
+    </div>
+  }
+
+  <!-- Mensajes sin leer -->
+  <div class="dashboard__section">
+    <div class="dashboard__section-head">
+      <h3 class="dashboard__section-title">
+        Mensajes sin leer
+        @if (noLeidos().length > 0) {
+          <span class="badge-count">{{ noLeidos().length }}</span>
+        }
+      </h3>
+      <a routerLink="/admin/contactos" class="dashboard__ver-todos">Ver todos →</a>
+    </div>
+
+    @if (noLeidos().length === 0) {
+      <p class="dashboard__vacio">Sin mensajes pendientes.</p>
+    } @else {
+      <div class="msg-list">
+        @for (m of noLeidos(); track m.id) {
+          <div class="msg-preview">
+            <div class="msg-preview__head">
+              <strong>{{ m.nombre }}</strong>
+              @if (m.telefono) { <span class="msg-preview__tel">{{ m.telefono }}</span> }
+              <span class="msg-preview__fecha">{{ formatFecha(m.createdAt) }}</span>
+            </div>
+            <p class="msg-preview__texto">
+              {{ m.mensaje.length > 120 ? m.mensaje.substring(0, 120) + '…' : m.mensaje }}
+            </p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Accesos rápidos -->
+  <div class="dashboard__section">
+    <h3 class="dashboard__section-title">Acciones rápidas</h3>
+    <div class="quick-actions">
+      <a routerLink="/admin/lotes" class="quick-action">
+        <span>🏗️</span> Gestionar lotes
+      </a>
+      <a routerLink="/admin/contactos" class="quick-action">
+        <span>📩</span> Ver mensajes
+      </a>
+      <a routerLink="/lotes" target="_blank" class="quick-action quick-action--outline">
+        <span>👁️</span> Ver sitio público
+      </a>
+    </div>
+  </div>
+
+</div>

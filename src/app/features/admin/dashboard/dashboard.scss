@@ -1,0 +1,112 @@
+.dashboard {
+  &__titulo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 1.5rem;
+  }
+  &__skeleton { color: #94a3b8; padding: 1rem 0; }
+  &__section  { margin-top: 2rem; }
+  &__section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  &__section-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  &__ver-todos {
+    font-size: .85rem;
+    color: #1d4ed8;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
+  &__vacio { color: #94a3b8; font-size: .9rem; margin: 0; }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  border-top: 4px solid #1d4ed8;
+
+  &__num   { display: block; font-size: 2rem; font-weight: 800; color: #1e293b; }
+  &__label { font-size: .8rem; color: #64748b; margin-top: .25rem; }
+
+  &--green  { border-top-color: #16a34a; }
+  &--yellow { border-top-color: #ca8a04; }
+  &--gray   { border-top-color: #64748b; }
+}
+
+.badge-count {
+  background: #ef4444;
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 700;
+  padding: .15rem .45rem;
+  border-radius: 9999px;
+}
+
+.msg-list { display: flex; flex-direction: column; gap: .75rem; }
+
+.msg-preview {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #1d4ed8;
+  border-radius: 8px;
+  padding: .875rem 1rem;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-wrap: wrap;
+    margin-bottom: .375rem;
+  }
+  &__tel   { font-size: .8rem; color: #64748b; }
+  &__fecha { font-size: .75rem; color: #94a3b8; margin-left: auto; }
+  &__texto { margin: 0; font-size: .875rem; color: #475569; }
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+.quick-action {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  background: #1d4ed8;
+  color: #fff;
+  text-decoration: none;
+  padding: .75rem 1.25rem;
+  border-radius: 8px;
+  font-size: .9rem;
+  font-weight: 500;
+  transition: background .2s;
+
+  &:hover { background: #1e40af; }
+  &--outline {
+    background: #fff;
+    color: #1d4ed8;
+    border: 1.5px solid #1d4ed8;
+    &:hover { background: #eff6ff; }
+  }
+}
