@@ -1,0 +1,83 @@
+.footer {
+  background-color: #1c2833;
+  color: rgba(255,255,255,0.75);
+  margin-top: auto;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+  }
+
+  &__logo {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  &__tagline {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  &__links, &__contact {
+    h4 {
+      color: #e67e22;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.75rem;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    a {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #e67e22;
+      }
+    }
+
+    p {
+      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+    }
+  }
+
+  &__whatsapp {
+    display: inline-block;
+    margin-top: 0.75rem;
+    background-color: #25d366;
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #1ebe5d;
+      color: #fff;
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+  }
+}

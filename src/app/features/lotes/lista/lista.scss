@@ -1,0 +1,330 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+// ── Encabezado ────────────────────────────────────────────────────────────────
+.page-header {
+  background: linear-gradient(135deg, #1a5276 0%, #154360 100%);
+  padding: 3rem 0 2.5rem;
+
+  @media (max-width: 600px) {
+    padding: 2rem 0 1.75rem;
+  }
+
+  &__title {
+    color: #fff;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+  }
+
+  &__sub {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__stats {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+}
+
+.stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 20px;
+  font-weight: 500;
+
+  strong { font-weight: 800; font-size: 0.95rem; }
+
+  &--green  { background: rgba(39,174,96,0.18);  color: #7dcea0; }
+  &--yellow { background: rgba(243,156,18,0.18); color: #f9c74f; }
+  &--gray   { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.55); }
+}
+
+// ── Layout sidebar + resultados ───────────────────────────────────────────────
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  align-items: start;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ── Backdrop filtros móvil ────────────────────────────────────────────────────
+.filtros__backdrop {
+  display: none;
+
+  @media (max-width: 860px) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 199;
+  }
+}
+
+// ── Sidebar filtros ───────────────────────────────────────────────────────────
+.filtros {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @media (max-width: 860px) {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    overflow-y: auto;
+    border-radius: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    max-width: 320px;
+
+    &--abierto {
+      transform: translateX(0);
+      box-shadow: 4px 0 24px rgba(0,0,0,0.2);
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__titulo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a5276;
+  }
+
+  &__limpiar {
+    font-size: 0.8rem;
+    color: #e67e22;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0;
+
+    &:hover { text-decoration: underline; }
+  }
+
+  &__grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  &__label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #7f8c8d;
+  }
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  &__precio-opts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  &__rango {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &-sep {
+      color: #bdc3c7;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.88rem;
+    color: #1c2833;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus { border-color: #1a5276; }
+
+    // quita flechas number en Firefox
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button { -webkit-appearance: none; }
+  }
+
+  &__select {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.88rem;
+    color: #1c2833;
+    outline: none;
+    background: #fff;
+    width: 100%;
+    cursor: pointer;
+    transition: border-color 0.2s;
+
+    &:focus { border-color: #1a5276; }
+  }
+}
+
+// ── Chips reutilizables ───────────────────────────────────────────────────────
+.chip {
+  background: #f4f6f7;
+  color: #5d6d7e;
+  border: 1.5px solid transparent;
+  border-radius: 20px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover {
+    background: #eaf2ff;
+    color: #1a5276;
+  }
+
+  &--activo {
+    background: #1a5276;
+    color: #fff;
+    border-color: #1a5276;
+  }
+
+  &--sm {
+    font-size: 0.78rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 8px;
+    text-align: left;
+    width: 100%;
+
+    &.chip--activo {
+      background: #1a5276;
+      color: #fff;
+    }
+  }
+}
+
+// ── Resultados ────────────────────────────────────────────────────────────────
+.resultados {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  &__barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  &__count {
+    font-size: 0.9rem;
+    color: #5d6d7e;
+
+    strong {
+      color: #1a5276;
+      font-size: 1.05rem;
+    }
+  }
+
+  &__filtros-btn {
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1a5276;
+    background: #fff;
+    border: 1.5px solid #d5e8f7;
+    border-radius: 8px;
+    padding: 0.45rem 0.9rem;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s;
+
+    &:hover { background: #eaf2ff; }
+
+    @media (max-width: 860px) { display: flex; }
+  }
+
+  &__filtros-dot {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    background: #e67e22;
+    border-radius: 50%;
+    border: 2px solid #f4f6f7;
+  }
+
+  &__vacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: #95a5a6;
+    font-size: 0.95rem;
+  }
+
+  &__vacio-icon {
+    font-size: 2.5rem;
+  }
+}
+
+.lotes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.btn-limpiar {
+  background: #e67e22;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover { background: #d35400; }
+}

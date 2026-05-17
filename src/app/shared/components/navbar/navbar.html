@@ -1,0 +1,45 @@
+<nav class="navbar">
+  <div class="navbar__container">
+    <!-- Logo -->
+    <a routerLink="/home" class="navbar__logo" (click)="cerrarMenu()">
+      <span class="navbar__logo-icon">&#9633;</span>
+      <span class="navbar__logo-text">LotesRB</span>
+    </a>
+
+    <!-- Links escritorio -->
+    <ul class="navbar__links">
+      <li>
+        <a routerLink="/home" routerLinkActive="navbar__link--active" class="navbar__link">Inicio</a>
+      </li>
+      <li>
+        <a routerLink="/proyecto" routerLinkActive="navbar__link--active" class="navbar__link">El Proyecto</a>
+      </li>
+      <li>
+        <a routerLink="/lotes" routerLinkActive="navbar__link--active" class="navbar__link">Lotes</a>
+      </li>
+      <li>
+        <a routerLink="/contacto" routerLinkActive="navbar__link--active" class="navbar__link">Contacto</a>
+      </li>
+    </ul>
+
+    <!-- CTA escritorio -->
+    <a routerLink="/lotes" class="navbar__cta">Ver lotes disponibles</a>
+
+    <!-- Botón hamburguesa -->
+    <button class="navbar__hamburger" (click)="toggleMenu()" aria-label="Menú">
+      <span [class.open]="menuAbierto()"></span>
+      <span [class.open]="menuAbierto()"></span>
+      <span [class.open]="menuAbierto()"></span>
+    </button>
+  </div>
+
+  <!-- Menú móvil -->
+  @if (menuAbierto()) {
+    <div class="navbar__mobile">
+      <a routerLink="/home" class="navbar__mobile-link" (click)="cerrarMenu()">Inicio</a>
+      <a routerLink="/proyecto" class="navbar__mobile-link" (click)="cerrarMenu()">El Proyecto</a>
+      <a routerLink="/lotes" class="navbar__mobile-link" (click)="cerrarMenu()">Lotes</a>
+      <a routerLink="/contacto" class="navbar__mobile-link" (click)="cerrarMenu()">Contacto</a>
+    </div>
+  }
+</nav>

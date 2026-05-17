@@ -1,0 +1,442 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+// ── Breadcrumb ────────────────────────────────────────────────────────────────
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 1.25rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.82rem;
+  color: #95a5a6;
+
+  a {
+    color: #5d6d7e;
+    transition: color 0.15s;
+    &:hover { color: #1a5276; }
+  }
+
+  span:not(:last-child) { color: #bdc3c7; }
+  span:last-child       { color: #1a5276; font-weight: 600; }
+}
+
+// ── Layout dos columnas ───────────────────────────────────────────────────────
+.detalle {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 2rem;
+  padding-top: 1.5rem;
+  padding-bottom: 4rem;
+  align-items: start;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+
+    .ficha { order: -1; }
+  }
+
+  &__izq {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+// ── Galería ───────────────────────────────────────────────────────────────────
+.galeria {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #1a5276;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #1a5276 0%, #154360 55%, #1c2833 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
+  }
+
+  &__svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+
+  &__placeholder-info {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  &__placeholder-num {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  &__placeholder-sub {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.8rem;
+  }
+
+  &__badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.3rem 0.85rem;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+
+    &--disponible { background: rgba(39,174,96,0.9);  color: #fff; }
+    &--reservado  { background: rgba(243,156,18,0.9); color: #fff; }
+    &--vendido    { background: rgba(60,60,60,0.8);   color: #fff; }
+  }
+}
+
+// ── Descripción ───────────────────────────────────────────────────────────────
+.descripcion {
+  &__titulo {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a5276;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eaf2ff;
+  }
+
+  &__texto {
+    font-size: 0.93rem;
+    color: #5d6d7e;
+    line-height: 1.7;
+  }
+}
+
+// ── Servicios ─────────────────────────────────────────────────────────────────
+.servicios {
+  &__titulo {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a5276;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eaf2ff;
+  }
+
+  &__lista {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.6rem;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #f4f9ff;
+    border: 1px solid #d5e8f7;
+    border-radius: 8px;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.87rem;
+    color: #2c3e50;
+    font-weight: 500;
+  }
+
+  &__icono {
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+}
+
+// ── Lotes relacionados ────────────────────────────────────────────────────────
+.relacionados {
+  &__titulo {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a5276;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eaf2ff;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+}
+
+.rel-card {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid #e8eef4;
+  background: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  }
+
+  &__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: #1a5276;
+    overflow: hidden;
+  }
+
+  &__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a5276, #154360);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__badge {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+
+    &--disponible { background: #27ae60; }
+    &--reservado  { background: #f39c12; }
+    &--vendido    { background: #95a5a6; }
+  }
+
+  &__info {
+    padding: 0.6rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+
+    strong {
+      font-size: 0.85rem;
+      color: #1a5276;
+    }
+
+    span {
+      font-size: 0.75rem;
+      color: #7f8c8d;
+    }
+  }
+}
+
+// ── Ficha lateral (sticky) ────────────────────────────────────────────────────
+.ficha {
+  position: sticky;
+  top: 80px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.75rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  &__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  &__id {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  &__titulo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1a5276;
+    line-height: 1.1;
+  }
+
+  &__manzana {
+    font-size: 0.8rem;
+    color: #95a5a6;
+    font-weight: 500;
+  }
+
+  &__estado {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &--disponible { background: #eafaf1; color: #27ae60; }
+    &--reservado  { background: #fef9e7; color: #d68910; }
+    &--vendido    { background: #f2f3f4; color: #7f8c8d; }
+  }
+
+  &__precio {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: #1c2833;
+    line-height: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 1rem 0;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  &__precio-sub {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #95a5a6;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__datos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  &__dato {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+
+    &--full { grid-column: 1 / -1; }
+
+    dt {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #95a5a6;
+      font-weight: 600;
+    }
+
+    dd {
+      font-size: 0.92rem;
+      color: #1c2833;
+      font-weight: 600;
+    }
+  }
+
+  &__ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__nota {
+    font-size: 0.78rem;
+    color: #95a5a6;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  &__no-disponible {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+    color: #95a5a6;
+    font-size: 0.9rem;
+  }
+
+  &__volver {
+    display: block;
+    text-align: center;
+    font-size: 0.82rem;
+    color: #7f8c8d;
+    padding-top: 0.25rem;
+    transition: color 0.15s;
+
+    &:hover { color: #1a5276; }
+  }
+}
+
+// ── CTAs ──────────────────────────────────────────────────────────────────────
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: all 0.2s;
+  text-align: center;
+
+  &--whatsapp {
+    background: #25d366;
+    color: #fff;
+    &:hover { background: #1ebe5d; }
+  }
+
+  &--secondary {
+    background: #f4f6f7;
+    color: #1a5276;
+    border: 1.5px solid #d5e8f7;
+    &:hover { background: #eaf2ff; }
+  }
+}
+
+// ── No encontrado ─────────────────────────────────────────────────────────────
+.no-encontrado {
+  padding: 4rem 0;
+  text-align: center;
+  color: #95a5a6;
+  font-size: 0.95rem;
+
+  a {
+    color: #1a5276;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 0.75rem;
+  }
+}

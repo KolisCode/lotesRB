@@ -1,0 +1,319 @@
+// ─── Utilidades compartidas ────────────────────────────────────────────────
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: 2px solid transparent;
+
+  &--primary {
+    background: #e67e22;
+    color: #fff;
+    &:hover { background: #d35400; }
+  }
+
+  &--outline {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255,255,255,0.6);
+    &:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
+  }
+
+  &--outline-light {
+    background: transparent;
+    color: #1a5276;
+    border-color: #1a5276;
+    &:hover { background: #1a5276; color: #fff; }
+  }
+
+  &--whatsapp {
+    background: #25d366;
+    color: #fff;
+    &:hover { background: #1ebe5d; }
+  }
+
+  &__arrow { font-size: 1rem; }
+}
+
+// ─── Sección genérica ───────────────────────────────────────────────────────
+.section {
+  padding: 5rem 0;
+  background: #f4f6f7;
+
+  @media (max-width: 600px) {
+    padding: 3rem 0;
+  }
+
+  &--dark {
+    background: #1c2833;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    @media (max-width: 600px) {
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    color: #1a5276;
+    margin-bottom: 0.5rem;
+
+    &--light { color: #fff; }
+  }
+
+  &__sub {
+    color: #5d6d7e;
+    font-size: 1rem;
+
+    &--light { color: rgba(255,255,255,0.6); }
+  }
+
+  &__footer {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+}
+
+// ─── Hero ───────────────────────────────────────────────────────────────────
+.hero {
+  position: relative;
+  min-height: 540px;
+  background:
+    linear-gradient(135deg, rgba(26,82,118,0.95) 0%, rgba(20,60,90,0.9) 100%);
+  background-color: #1a5276;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1.5rem 8rem;
+  text-align: center;
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    min-height: auto;
+    padding: 3.5rem 1.25rem 7rem;
+  }
+
+  // Patrón decorativo de fondo
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.03) 0,
+      rgba(255,255,255,0.03) 1px,
+      transparent 0,
+      transparent 50%
+    );
+    background-size: 24px 24px;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+  }
+
+  &__eyebrow {
+    color: #e67e22;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+  }
+
+  &__title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+  }
+
+  &__subtitle {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &__stats {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    display: flex;
+    gap: 0;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.1rem 2.5rem;
+    gap: 0.2rem;
+
+    &:not(:last-child) {
+      border-right: 1px solid #ecf0f1;
+    }
+
+    @media (max-width: 480px) {
+      padding: 1rem 1.25rem;
+    }
+
+    @media (max-width: 360px) {
+      padding: 0.75rem 0.85rem;
+    }
+  }
+
+  &__stats {
+    @media (max-width: 360px) {
+      max-width: calc(100% - 1.5rem);
+    }
+  }
+
+  &__stat-num {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1a5276;
+    line-height: 1;
+  }
+
+  &__stat-label {
+    font-size: 0.72rem;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+// ─── Grid de lotes destacados ────────────────────────────────────────────────
+.lotes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding-top: 2rem; // espacio para que no tape los stats del hero
+}
+
+// ─── Ventajas ────────────────────────────────────────────────────────────────
+.ventajas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.ventaja {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  transition: background 0.2s;
+
+  &:hover { background: rgba(255,255,255,0.09); }
+
+  &__icono {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  &__titulo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  &__desc {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.55;
+  }
+}
+
+// ─── CTA Band ────────────────────────────────────────────────────────────────
+.cta-band {
+  background: linear-gradient(135deg, #e67e22, #d35400);
+  padding: 3.5rem 0;
+
+  @media (max-width: 600px) {
+    padding: 2.5rem 0;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.25rem;
+    }
+  }
+
+  &__title {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.3rem;
+  }
+
+  &__sub {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.95rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 600px) {
+      justify-content: center;
+    }
+  }
+}
+
+// ─── Primer section tiene extra padding (por stats del hero) ─────────────────
+.section:first-of-type {
+  padding-top: 6rem;
+
+  @media (max-width: 600px) {
+    padding-top: 5rem;
+  }
+}

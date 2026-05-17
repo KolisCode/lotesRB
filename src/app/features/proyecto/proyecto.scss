@@ -1,0 +1,389 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: 2px solid transparent;
+  text-decoration: none;
+
+  &--primary {
+    background: #e67e22;
+    color: #fff;
+    &:hover { background: #d35400; }
+  }
+
+  &--outline {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255,255,255,0.6);
+    &:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
+  }
+
+  &--whatsapp {
+    background: #25d366;
+    color: #fff;
+    &:hover { background: #1ebe5d; }
+  }
+}
+
+// ── Encabezado ────────────────────────────────────────────────────────────────
+.page-header {
+  background: linear-gradient(135deg, #1a5276 0%, #154360 100%);
+  padding: 4rem 0 3rem;
+
+  @media (max-width: 600px) {
+    padding: 2.5rem 0 2rem;
+  }
+
+  &__eyebrow {
+    color: #e67e22;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.75rem;
+  }
+
+  &__title {
+    color: #fff;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    line-height: 1.15;
+  }
+
+  &__sub {
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    max-width: 560px;
+    line-height: 1.6;
+  }
+}
+
+// ── Secciones ─────────────────────────────────────────────────────────────────
+.section {
+  padding: 5rem 0;
+  background: #f4f6f7;
+
+  @media (max-width: 600px) {
+    padding: 3rem 0;
+  }
+
+  &--alt {
+    background: #fff;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    @media (max-width: 600px) {
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    color: #1a5276;
+    margin-bottom: 0.5rem;
+  }
+
+  &__sub {
+    color: #5d6d7e;
+    font-size: 1rem;
+  }
+}
+
+// ── Ubicación ─────────────────────────────────────────────────────────────────
+.ubicacion-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mapa-placeholder {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+
+  &__nota {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #95a5a6;
+    padding: 0.6rem;
+    background: #f8f9fa;
+    border-top: 1px solid #ecf0f1;
+    margin: 0;
+  }
+}
+
+.mapa-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.ubicacion-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.distancias {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+
+  &__titulo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a5276;
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid #eaf2ff;
+  }
+
+  &__lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+
+    strong {
+      display: block;
+      font-size: 0.9rem;
+      color: #1c2833;
+      font-weight: 600;
+    }
+
+    span {
+      font-size: 0.82rem;
+      color: #7f8c8d;
+    }
+  }
+
+  &__icono {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+}
+
+.servicios-grid {
+  &__titulo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a5276;
+    margin-bottom: 0.85rem;
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+.servicio-tag {
+  background: #eaf2ff;
+  color: #1a5276;
+  border: 1px solid #d5e8f7;
+  border-radius: 20px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+// ── Proceso de compra ─────────────────────────────────────────────────────────
+.proceso {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+  margin-bottom: 3rem;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.paso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  &__num {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #1a5276;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    flex-shrink: 0;
+    margin-bottom: 0.5rem;
+
+    &--last {
+      background: #e67e22;
+    }
+  }
+
+  &__conector {
+    position: absolute;
+    top: 22px;
+    left: calc(50% + 22px);
+    right: calc(-50% + 22px);
+    height: 2px;
+    background: #d5e8f7;
+    z-index: 0;
+
+    @media (max-width: 860px) {
+      display: none;
+    }
+  }
+
+  &__cuerpo {
+    text-align: center;
+    padding: 0 1rem;
+
+    @media (max-width: 860px) {
+      text-align: left;
+      padding: 0;
+    }
+  }
+
+  &__icono {
+    font-size: 1.75rem;
+    display: block;
+    margin: 0.75rem 0 0.5rem;
+  }
+
+  &__titulo {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a5276;
+    margin-bottom: 0.4rem;
+  }
+
+  &__desc {
+    font-size: 0.84rem;
+    color: #5d6d7e;
+    line-height: 1.55;
+  }
+}
+
+// ── Financiación ──────────────────────────────────────────────────────────────
+.financiacion {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #fef9f0, #fef3e2);
+  border: 1.5px solid #f9c74f;
+  border-radius: 14px;
+  padding: 1.75rem 2rem;
+  flex-wrap: wrap;
+
+  &__icono {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  &__texto {
+    flex: 1;
+    min-width: 200px;
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1a5276;
+      margin-bottom: 0.3rem;
+    }
+
+    p {
+      font-size: 0.88rem;
+      color: #5d6d7e;
+      line-height: 1.5;
+      margin: 0;
+    }
+  }
+}
+
+// ── CTA Band ──────────────────────────────────────────────────────────────────
+.cta-band {
+  background: linear-gradient(135deg, #e67e22, #d35400);
+  padding: 3.5rem 0;
+
+  @media (max-width: 600px) {
+    padding: 2.5rem 0;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.25rem;
+    }
+  }
+
+  &__title {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.3rem;
+  }
+
+  &__sub {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.95rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 600px) {
+      justify-content: center;
+    }
+  }
+}

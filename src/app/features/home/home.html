@@ -1,0 +1,100 @@
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <p class="hero__eyebrow">Proyecto residencial · Lotes desde 160 m²</p>
+    <h1 class="hero__title">Tu terreno propio,<br>al alcance de tu mano</h1>
+    <p class="hero__subtitle">
+      Lotes con todos los servicios, escrituración garantizada<br>
+      y financiación directa sin banco.
+    </p>
+    <div class="hero__actions">
+      <a routerLink="/lotes" class="btn btn--primary">Ver lotes disponibles</a>
+      <a routerLink="/proyecto" class="btn btn--outline">Conocer el proyecto</a>
+    </div>
+  </div>
+
+  <!-- Stats flotantes -->
+  <div class="hero__stats">
+    <div class="hero__stat">
+      <span class="hero__stat-num">{{ resumen().total }}</span>
+      <span class="hero__stat-label">Lotes totales</span>
+    </div>
+    <div class="hero__stat">
+      <span class="hero__stat-num">{{ resumen().disponibles }}</span>
+      <span class="hero__stat-label">Disponibles</span>
+    </div>
+    <div class="hero__stat">
+      <span class="hero__stat-num">{{ resumen().vendidos }}</span>
+      <span class="hero__stat-label">Vendidos</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LOTES DESTACADOS ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section__header">
+      <h2 class="section__title">Lotes disponibles</h2>
+      <p class="section__sub">Seleccionados para ti, listos para construir tu hogar</p>
+    </div>
+
+    @if (errorLotes()) {
+      <p class="section__error">No se pudieron cargar los lotes. Intenta de nuevo más tarde.</p>
+    } @else {
+      <div class="lotes-grid">
+        @for (lote of destacados(); track lote.id) {
+          <app-lote-card [lote]="lote" />
+        }
+      </div>
+    }
+
+    <div class="section__footer">
+      <a routerLink="/lotes" class="btn btn--primary">
+        Ver todos los lotes
+        <span class="btn__arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VENTAJAS ===== -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section__header">
+      <h2 class="section__title section__title--light">¿Por qué elegirnos?</h2>
+      <p class="section__sub section__sub--light">Compramos con confianza y respaldo</p>
+    </div>
+
+    <div class="ventajas-grid">
+      @for (v of ventajas; track v.titulo) {
+        <div class="ventaja">
+          <span class="ventaja__icono">{{ v.icono }}</span>
+          <h3 class="ventaja__titulo">{{ v.titulo }}</h3>
+          <p class="ventaja__desc">{{ v.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA FINAL ===== -->
+<section class="cta-band">
+  <div class="container">
+    <div class="cta-band__content">
+      <div>
+        <h2 class="cta-band__title">¿Listo para invertir en tu lote?</h2>
+        <p class="cta-band__sub">Escríbenos y un asesor te contacta hoy mismo.</p>
+      </div>
+      <div class="cta-band__actions">
+        <a
+          [href]="whatsappUrl"
+          target="_blank" rel="noopener"
+          class="btn btn--whatsapp">
+          Escribir por WhatsApp
+        </a>
+        <a routerLink="/contacto" class="btn btn--outline">Formulario de contacto</a>
+      </div>
+    </div>
+  </div>
+</section>

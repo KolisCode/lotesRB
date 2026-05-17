@@ -1,0 +1,151 @@
+<!-- ── Encabezado de página ── -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Lotes disponibles</h1>
+    <p class="page-header__sub">Encuentra el terreno ideal para construir tu hogar</p>
+
+    <!-- Stats rápidas -->
+    <div class="page-header__stats">
+      <div class="stat-chip stat-chip--green">
+        <strong>{{ resumen().disponibles }}</strong> disponibles
+      </div>
+      <div class="stat-chip stat-chip--yellow">
+        <strong>{{ resumen().reservados }}</strong> reservados
+      </div>
+      <div class="stat-chip stat-chip--gray">
+        <strong>{{ resumen().vendidos }}</strong> vendidos
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="layout container">
+
+  <!-- Backdrop móvil para cerrar el panel de filtros -->
+  @if (panelAbierto()) {
+    <div class="filtros__backdrop" (click)="panelAbierto.set(false)"></div>
+  }
+
+  <!-- ── Panel de filtros (sidebar) ── -->
+  <aside class="filtros" [class.filtros--abierto]="panelAbierto()">
+
+    <div class="filtros__header">
+      <h2 class="filtros__titulo">Filtros</h2>
+      @if (hayFiltrosActivos()) {
+        <button class="filtros__limpiar" (click)="limpiarFiltros()">
+          Limpiar
+        </button>
+      }
+    </div>
+
+    <!-- Estado -->
+    <div class="filtros__grupo">
+      <label class="filtros__label">Estado</label>
+      <div class="filtros__chips">
+        @for (op of estadoOpciones; track op.valor) {
+          <button
+            class="chip"
+            [class.chip--activo]="filtroEstado() === op.valor"
+            (click)="setEstado(op.valor)">
+            {{ op.label }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Área -->
+    <div class="filtros__grupo">
+      <label class="filtros__label">Área (m²)</label>
+      <div class="filtros__rango">
+        <input
+          class="filtros__input"
+          type="number"
+          placeholder="Mín"
+          [value]="filtroAreaMin() ?? ''"
+          (input)="onAreaMin($any($event.target).value)"
+          min="0"
+        />
+        <span class="filtros__rango-sep">—</span>
+        <input
+          class="filtros__input"
+          type="number"
+          placeholder="Máx"
+          [value]="filtroAreaMax() ?? ''"
+          (input)="onAreaMax($any($event.target).value)"
+          min="0"
+        />
+      </div>
+    </div>
+
+    <!-- Precio máximo -->
+    <div class="filtros__grupo">
+      <label class="filtros__label">Precio máximo</label>
+      <div class="filtros__precio-opts">
+        @for (op of precioOpciones; track op.label) {
+          <button
+            class="chip chip--sm"
+            [class.chip--activo]="filtroPrecio() === op.valor"
+            (click)="setPrecio(op.valor)">
+            {{ op.label }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Ordenar -->
+    <div class="filtros__grupo">
+      <label class="filtros__label" for="orden">Ordenar por</label>
+      <select
+        id="orden"
+        class="filtros__select"
+        [value]="orden()"
+        (change)="setOrden($any($event.target).value)">
+        @for (op of ordenOpciones; track op.valor) {
+          <option [value]="op.valor">{{ op.label }}</option>
+        }
+      </select>
+    </div>
+
+  </aside>
+
+  <!-- ── Área de resultados ── -->
+  <div class="resultados">
+
+    <!-- Barra superior resultados -->
+    <div class="resultados__barra">
+      <p class="resultados__count">
+        <strong>{{ lotesFiltrados().length }}</strong>
+        {{ lotesFiltrados().length === 1 ? 'lote encontrado' : 'lotes encontrados' }}
+      </p>
+
+      <!-- Botón filtros móvil -->
+      <button class="resultados__filtros-btn" (click)="panelAbierto.update(v => !v)">
+        <span>&#9776;</span>
+        Filtros
+        @if (hayFiltrosActivos()) {
+          <span class="resultados__filtros-dot"></span>
+        }
+      </button>
+    </div>
+
+    <!-- Grid de cards -->
+    @if (errorCarga()) {
+      <div class="resultados__error">
+        <p>No se pudieron cargar los lotes. Intenta de nuevo más tarde.</p>
+      </div>
+    } @else if (lotesFiltrados().length > 0) {
+      <div class="lotes-grid">
+        @for (lote of lotesFiltrados(); track lote.id) {
+          <app-lote-card [lote]="lote" />
+        }
+      </div>
+    } @else {
+      <div class="resultados__vacio">
+        <span class="resultados__vacio-icon">&#128269;</span>
+        <p>No hay lotes que coincidan con los filtros seleccionados.</p>
+        <button class="btn-limpiar" (click)="limpiarFiltros()">Limpiar filtros</button>
+      </div>
+    }
+
+  </div>
+</div>

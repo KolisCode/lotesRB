@@ -1,0 +1,226 @@
+.lote-card {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.13);
+  }
+
+  // Acento de estado: borde izquierdo visible en el cuerpo
+  &--disponible .lote-card__body { border-left: 4px solid #27ae60; }
+  &--reservado  .lote-card__body { border-left: 4px solid #f39c12; }
+  &--vendido {
+    opacity: 0.72;
+    .lote-card__body { border-left: 4px solid #bdc3c7; }
+  }
+
+  // ── Media (imagen / placeholder) ──────────────────────────────────────────
+  &__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 2;         // estándar finca raíz
+    overflow: hidden;
+    background: #1a5276;
+    flex-shrink: 0;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+
+    .lote-card:hover & {
+      transform: scale(1.04);
+    }
+  }
+
+  // Placeholder cuando no hay imagen
+  &__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #1a5276 0%, #154360 60%, #1c2833 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+
+    // Patrón de cuadrícula sutil (evoca plano de loteo)
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+  }
+
+  &__placeholder-icon {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  &__placeholder-label {
+    position: relative;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  // Badge de estado sobre la imagen
+  &__badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+    z-index: 2;
+
+    .lote-card--disponible & {
+      background: rgba(39,174,96,0.9);
+      color: #fff;
+    }
+    .lote-card--reservado & {
+      background: rgba(243,156,18,0.9);
+      color: #fff;
+    }
+    .lote-card--vendido & {
+      background: rgba(80,80,80,0.75);
+      color: #fff;
+    }
+  }
+
+  // Precio + área superpuestos en la parte inferior de la imagen
+  &__precio-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 0.9rem 0.7rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    z-index: 2;
+  }
+
+  &__precio {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    letter-spacing: -0.3px;
+  }
+
+  &__area-badge {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+  }
+
+  // ── Cuerpo ────────────────────────────────────────────────────────────────
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.1rem 1.25rem 1.25rem;
+    flex: 1;
+  }
+
+  &__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  &__numero {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a5276;
+  }
+
+  &__manzana {
+    font-size: 0.78rem;
+    color: #95a5a6;
+    font-weight: 500;
+  }
+
+  &__ubicacion {
+    font-size: 0.83rem;
+    color: #5d6d7e;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.3rem;
+    line-height: 1.4;
+  }
+
+  &__servicios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: auto;
+  }
+
+  &__servicio {
+    font-size: 0.72rem;
+    background: #eaf2ff;
+    color: #1a5276;
+    padding: 0.18rem 0.55rem;
+    border-radius: 20px;
+    font-weight: 500;
+
+    &--mas {
+      background: #f4f6f7;
+      color: #7f8c8d;
+    }
+  }
+
+  &__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.65rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+    margin-top: 0.25rem;
+
+    .lote-card--disponible & {
+      background: #e67e22;
+      color: #fff;
+      &:hover { background: #d35400; }
+    }
+
+    &--disabled {
+      background: #f0f0f0;
+      color: #aaa;
+      cursor: not-allowed;
+    }
+  }
+}

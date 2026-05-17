@@ -1,0 +1,33 @@
+<footer class="footer">
+  <div class="footer__container">
+    <div class="footer__brand">
+      <span class="footer__logo">&#9633; LotesRB</span>
+      <p class="footer__tagline">Tu terreno, tu futuro.</p>
+    </div>
+
+    <div class="footer__links">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a routerLink="/home">Inicio</a></li>
+        <li><a routerLink="/proyecto">El Proyecto</a></li>
+        <li><a routerLink="/lotes">Lotes disponibles</a></li>
+        <li><a routerLink="/contacto">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__contact">
+      <h4>Contacto</h4>
+      <p>&#128222; <a [href]="'tel:+' + whatsappNumber">+57 300 000 0000</a></p>
+      <p>&#128205; Colombia</p>
+      <a class="footer__whatsapp"
+         [href]="whatsappUrl"
+         target="_blank" rel="noopener">
+        Escribir por WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <p>&copy; {{ year }} LotesRB. Todos los derechos reservados.</p>
+  </div>
+</footer>

@@ -1,0 +1,213 @@
+<!-- ── Encabezado ── -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Contáctanos</h1>
+    <p class="page-header__sub">
+      Un asesor te responde en menos de 24 horas. Sin compromiso.
+    </p>
+  </div>
+</section>
+
+<!-- ── Cuerpo principal ── -->
+<section class="seccion">
+  <div class="container">
+    <div class="layout">
+
+      <!-- ══ COLUMNA IZQUIERDA — Formulario ══ -->
+      <div class="formulario-wrap">
+        <h2 class="formulario-wrap__titulo">Escríbenos</h2>
+        <p class="formulario-wrap__sub">
+          Cuéntanos qué lote te interesa y te contactamos con toda la información.
+        </p>
+
+        @if (!enviado()) {
+          <form
+            class="formulario"
+            #f="ngForm"
+            (ngSubmit)="f.valid && onSubmit()"
+            novalidate>
+
+            <!-- Nombre -->
+            <div class="campo" [class.campo--error]="nombre.invalid && nombre.touched">
+              <label class="campo__label" for="nombre">Nombre completo *</label>
+              <input
+                class="campo__input"
+                id="nombre"
+                name="nombre"
+                type="text"
+                placeholder="Tu nombre"
+                [(ngModel)]="form.nombre"
+                #nombre="ngModel"
+                required
+                minlength="2"
+              />
+              @if (nombre.invalid && nombre.touched) {
+                <span class="campo__error">Ingresa tu nombre.</span>
+              }
+            </div>
+
+            <!-- Teléfono -->
+            <div class="campo" [class.campo--error]="telefono.invalid && telefono.touched">
+              <label class="campo__label" for="telefono">Teléfono / WhatsApp *</label>
+              <input
+                class="campo__input"
+                id="telefono"
+                name="telefono"
+                type="tel"
+                placeholder="3XX XXX XXXX"
+                [(ngModel)]="form.telefono"
+                #telefono="ngModel"
+                required
+                pattern="[0-9\s\+\-]{7,15}"
+              />
+              @if (telefono.invalid && telefono.touched) {
+                <span class="campo__error">Ingresa un número válido.</span>
+              }
+            </div>
+
+            <!-- Email (opcional) -->
+            <div class="campo" [class.campo--error]="email.invalid && email.touched">
+              <label class="campo__label" for="email">
+                Correo electrónico
+                <span class="campo__opcional">(opcional)</span>
+              </label>
+              <input
+                class="campo__input"
+                id="email"
+                name="email"
+                type="email"
+                placeholder="tucorreo@ejemplo.com"
+                [(ngModel)]="form.email"
+                #email="ngModel"
+                email
+              />
+              @if (email.invalid && email.touched) {
+                <span class="campo__error">Ingresa un correo válido.</span>
+              }
+            </div>
+
+            <!-- Lote de interés -->
+            <div class="campo">
+              <label class="campo__label" for="interes">¿Qué lote te interesa?</label>
+              <select
+                class="campo__select"
+                id="interes"
+                name="interes"
+                [(ngModel)]="form.interes">
+                <option value="">Aún no lo sé / cualquier disponible</option>
+                <option value="manzana-a">Manzana A</option>
+                <option value="manzana-b">Manzana B</option>
+                <option value="manzana-c">Manzana C</option>
+                <option value="otro">Otro / varios</option>
+              </select>
+            </div>
+
+            <!-- Mensaje -->
+            <div class="campo">
+              <label class="campo__label" for="mensaje">Mensaje</label>
+              <textarea
+                class="campo__textarea"
+                id="mensaje"
+                name="mensaje"
+                rows="4"
+                placeholder="¿Tienes alguna pregunta o comentario adicional?"
+                [(ngModel)]="form.mensaje">
+              </textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="btn-enviar"
+              [disabled]="enviando()">
+              @if (enviando()) {
+                <span class="btn-enviar__spinner"></span> Enviando…
+              } @else {
+                Enviar mensaje
+              }
+            </button>
+
+          </form>
+        } @else {
+          <!-- Estado enviado -->
+          <div class="enviado">
+            <span class="enviado__icono">✓</span>
+            <h3 class="enviado__titulo">¡Mensaje recibido!</h3>
+            <p class="enviado__texto">
+              Gracias, {{ form.nombre }}. Un asesor se comunicará contigo pronto
+              al número <strong>{{ form.telefono }}</strong>.
+            </p>
+            <button class="enviado__reset" (click)="resetForm()">
+              Enviar otro mensaje
+            </button>
+          </div>
+        }
+      </div>
+
+      <!-- ══ COLUMNA DERECHA — Info de contacto ══ -->
+      <aside class="info">
+
+        <!-- WhatsApp destacado -->
+        <a
+          [href]="whatsappUrl"
+          target="_blank"
+          rel="noopener"
+          class="whatsapp-card">
+          <span class="whatsapp-card__icono">💬</span>
+          <div>
+            <strong>Escríbenos por WhatsApp</strong>
+            <span>Respuesta inmediata · [+57 300 000 0000]</span>
+          </div>
+          <span class="whatsapp-card__flecha">→</span>
+        </a>
+
+        <!-- Datos de contacto -->
+        <div class="datos-card">
+          <h3 class="datos-card__titulo">Información de contacto</h3>
+
+          <ul class="datos-card__lista">
+            <li class="datos-card__item">
+              <span class="datos-card__icono">📞</span>
+              <div>
+                <span class="datos-card__label">Teléfono</span>
+                <span class="datos-card__valor">[+57 300 000 0000]</span>
+              </div>
+            </li>
+            <li class="datos-card__item">
+              <span class="datos-card__icono">✉️</span>
+              <div>
+                <span class="datos-card__label">Correo</span>
+                <span class="datos-card__valor">[correo@ejemplo.com]</span>
+              </div>
+            </li>
+            <li class="datos-card__item">
+              <span class="datos-card__icono">📍</span>
+              <div>
+                <span class="datos-card__label">Dirección / punto de venta</span>
+                <span class="datos-card__valor">[Dirección del proyecto o punto de atención]</span>
+              </div>
+            </li>
+            <li class="datos-card__item">
+              <span class="datos-card__icono">🕐</span>
+              <div>
+                <span class="datos-card__label">Horario de atención</span>
+                <span class="datos-card__valor">Lunes a sábado · [8:00 a.m. – 6:00 p.m.]</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Aviso de respuesta -->
+        <div class="aviso">
+          <span class="aviso__icono">⏱️</span>
+          <p>Respondemos todos los mensajes en menos de <strong>24 horas</strong> hábiles.</p>
+        </div>
+
+        <!-- Enlace a catálogo -->
+        <a routerLink="/lotes" class="ver-lotes">
+          Ver catálogo de lotes →
+        </a>
+
+      </aside>
+    </div>
+  </div>
+</section>

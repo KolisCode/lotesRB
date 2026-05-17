@@ -1,0 +1,27 @@
+/* Tailwind CSS v4 */
+@layer base, components, utilities;
+
+/* Variables globales */
+:root {
+  --color-primary: #1a5276;
+  --color-secondary: #e67e22;
+  --color-bg: #f4f6f7;
+  --color-text: #1c2833;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
