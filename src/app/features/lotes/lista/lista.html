@@ -7,13 +7,13 @@
     <!-- Stats rápidas -->
     <div class="page-header__stats">
       <div class="stat-chip stat-chip--green">
-        <strong>{{ resumen().disponibles }}</strong> disponibles
+        <strong>{{ errorCarga() ? '–' : resumen().disponibles }}</strong> disponibles
       </div>
       <div class="stat-chip stat-chip--yellow">
-        <strong>{{ resumen().reservados }}</strong> reservados
+        <strong>{{ errorCarga() ? '–' : resumen().reservados }}</strong> reservados
       </div>
       <div class="stat-chip stat-chip--gray">
-        <strong>{{ resumen().vendidos }}</strong> vendidos
+        <strong>{{ errorCarga() ? '–' : resumen().vendidos }}</strong> vendidos
       </div>
     </div>
   </div>

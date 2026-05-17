@@ -1,6 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { whatsappUrl } from '../../core/config/project.constants';
 import { ContactoService } from '../../core/services/contacto.service';
 
@@ -20,9 +21,10 @@ interface FormData {
 })
 export class Contacto {
   private contactoSvc = inject(ContactoService);
+  private destroyRef  = inject(DestroyRef);
 
-  enviado  = signal(false);
-  enviando = signal(false);
+  enviado    = signal(false);
+  enviando   = signal(false);
   errorEnvio = signal(false);
 
   readonly whatsappUrl = whatsappUrl('Hola, me interesa un lote');
@@ -45,7 +47,7 @@ export class Contacto {
       email:    this.form.email.trim(),
       telefono: this.form.telefono.trim() || undefined,
       mensaje:  mensajeCompleto,
-    }).subscribe({
+    }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: () => {
         this.enviando.set(false);
         this.enviado.set(true);

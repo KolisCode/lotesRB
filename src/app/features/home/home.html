@@ -17,15 +17,15 @@
   <!-- Stats flotantes -->
   <div class="hero__stats">
     <div class="hero__stat">
-      <span class="hero__stat-num">{{ resumen().total }}</span>
+      <span class="hero__stat-num">{{ errorLotes() ? '–' : resumen().total }}</span>
       <span class="hero__stat-label">Lotes totales</span>
     </div>
     <div class="hero__stat">
-      <span class="hero__stat-num">{{ resumen().disponibles }}</span>
+      <span class="hero__stat-num">{{ errorLotes() ? '–' : resumen().disponibles }}</span>
       <span class="hero__stat-label">Disponibles</span>
     </div>
     <div class="hero__stat">
-      <span class="hero__stat-num">{{ resumen().vendidos }}</span>
+      <span class="hero__stat-num">{{ errorLotes() ? '–' : resumen().vendidos }}</span>
       <span class="hero__stat-label">Vendidos</span>
     </div>
   </div>

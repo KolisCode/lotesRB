@@ -15,6 +15,6 @@ export class ContactoService {
   private http = inject(HttpClient);
 
   enviar(payload: ContactoPayload) {
-    return this.http.post<{ id: number }>(`${environment.apiUrl}/contacto`, payload);
+    return this.http.post<{ message: string; id: number }>(`${environment.apiUrl}/contacto`, payload);
   }
 }

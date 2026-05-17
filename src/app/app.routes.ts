@@ -22,5 +22,8 @@ export const routes: Routes = [
     path: 'contacto',
     loadComponent: () => import('./features/contacto/contacto').then(m => m.Contacto),
   },
-  { path: '**', redirectTo: 'home' },
+  {
+    path: '**',
+    loadComponent: () => import('./features/not-found/not-found').then(m => m.NotFound),
+  },
 ];

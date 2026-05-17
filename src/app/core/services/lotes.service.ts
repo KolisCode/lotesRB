@@ -25,13 +25,13 @@ export class LotesService {
 
   getAll() {
     return this.http.get<LoteApiResponse[]>(`${environment.apiUrl}/lotes`).pipe(
-      map(lotes => lotes.map(this.mapLote))
+      map(lotes => lotes.map(l => this.mapLote(l)))
     );
   }
 
   getById(id: number) {
     return this.http.get<LoteApiResponse>(`${environment.apiUrl}/lotes/${id}`).pipe(
-      map(this.mapLote)
+      map(l => this.mapLote(l))
     );
   }
 
