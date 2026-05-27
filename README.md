@@ -3,7 +3,7 @@
 ![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
 
-> Frontend del portal inmobiliario LotesRB. **API:** [lotesrb-api](https://github.com/TU_USUARIO/lotesrb-api) · **Demo:** [lotesrb.kolisevm.online](https://lotesrb.kolisevm.online)
+> Frontend del portal inmobiliario LotesRB. **API:** [ApiLotesRB](https://github.com/KolisCode/ApiLotesRB) · **Demo:** [lotesrb.kolisevm.online](https://lotesrb.kolisevm.online)
 
 Aplicación web para la venta de lotes del proyecto Robinson. Sitio público con catálogo, detalle y formulario de contacto, más panel de administración para gestionar lotes y mensajes.
 
