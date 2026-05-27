@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./screenshots/readme-banner.png" alt="KolisCode Banner" width="100%"/>
+</p>
+
 # LotesRB — Frontend
 
 ![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)
@@ -6,6 +10,25 @@
 > Frontend del portal inmobiliario LotesRB. **API:** [ApiLotesRB](https://github.com/KolisCode/ApiLotesRB) · **Demo:** [lotesrb.kolisevm.online](https://lotesrb.kolisevm.online)
 
 Aplicación web para la venta de lotes del proyecto Robinson. Sitio público con catálogo, detalle y formulario de contacto, más panel de administración para gestionar lotes y mensajes.
+
+## Capturas
+
+<table>
+  <tr>
+    <td><img src="./screenshots/Inicio_bienvenida.png" alt="Landing"/><br/><sub>Landing — hero</sub></td>
+    <td><img src="./screenshots/Inicio_lotes.png" alt="Lotes destacados"/><br/><sub>Lotes destacados</sub></td>
+  </tr>
+  <tr>
+    <td><img src="./screenshots/Lotes_filtros.png" alt="Catálogo con filtros"/><br/><sub>Catálogo con filtros</sub></td>
+    <td><img src="./screenshots/Lotes_busqueda.png" alt="Búsqueda"/><br/><sub>Búsqueda de lotes</sub></td>
+  </tr>
+  <tr>
+    <td><img src="./screenshots/Proyecto_descripcion.png" alt="El proyecto"/><br/><sub>Descripción del proyecto</sub></td>
+    <td><img src="./screenshots/Proyecto_proceso.png" alt="Proceso"/><br/><sub>Proceso de compra</sub></td>
+  </tr>
+</table>
+
+---
 
 ## Stack
 
