@@ -1,59 +1,138 @@
-# LotesRb
+# LotesRB — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
 
-## Development server
+> Frontend del portal inmobiliario LotesRB. **API:** [lotesrb-api](https://github.com/TU_USUARIO/lotesrb-api) · **Demo:** [lotesrb.kolisevm.online](https://lotesrb.kolisevm.online)
 
-To start a local development server, run:
+Aplicación web para la venta de lotes del proyecto Robinson. Sitio público con catálogo, detalle y formulario de contacto, más panel de administración para gestionar lotes y mensajes.
 
-```bash
-ng serve
-```
+## Stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Angular 21** — standalone components, signals, control flow nativo (`@if`, `@for`)
+- **SCSS** — estilos por componente
+- **TypeScript 5**
 
-## Code scaffolding
+## Requisitos previos
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Node.js 20+
+- API corriendo en `http://localhost:3001/api` (ver `../lotes-rb-api`)
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Desarrollo local
 
 ```bash
-ng generate --help
+npm install
+npm start        # http://localhost:4200
 ```
 
-## Building
-
-To build the project run:
+## Build de producción
 
 ```bash
-ng build
+npm run build    # genera dist/lotes-rb/
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+En producción el `apiUrl` queda como `/api` (relativo al mismo dominio), lo que asume que Nginx hace proxy de `/api` hacia el puerto 3001.
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Estructura
 
-```bash
-ng test
+```
+src/
+├── environments/
+│   ├── environment.ts           # Dev  → apiUrl: http://localhost:3001/api
+│   └── environment.prod.ts      # Prod → apiUrl: /api
+│
+└── app/
+    ├── app.routes.ts            # Rutas con lazy loading
+    ├── app.config.ts            # Providers globales (router, http, interceptors)
+    │
+    ├── core/
+    │   ├── config/
+    │   │   └── project.constants.ts      # Número WhatsApp ← editar antes de prod
+    │   ├── guards/
+    │   │   └── auth.guard.ts             # Redirige a /admin/login si no hay JWT válido
+    │   ├── interceptors/
+    │   │   ├── auth.interceptor.ts       # Adjunta Bearer token en requests a la API
+    │   │   └── error.interceptor.ts      # Log de errores de red (status 0)
+    │   ├── models/
+    │   │   └── lote.model.ts             # Interfaces: Lote, Servicio, EstadoLote
+    │   └── services/
+    │       ├── lotes.service.ts          # GET público de lotes + filtros/resumen
+    │       ├── contacto.service.ts       # POST público del formulario
+    │       ├── admin-auth.service.ts     # Login/logout, token en sessionStorage
+    │       ├── admin-lotes.service.ts    # CRUD lotes + upload de imagen
+    │       └── admin-contacto.service.ts # Mensajes: listar, marcar leído, eliminar
+    │                                     # Expone noLeidosCount signal (badge sidebar)
+    ├── shared/
+    │   ├── components/
+    │   │   ├── navbar/                   # Navbar pública con menú móvil
+    │   │   ├── footer/                   # Footer ← editar placeholders antes de prod
+    │   │   └── lote-card/                # Tarjeta de lote reutilizable
+    │   └── pipes/
+    │       └── precio-pipe.ts            # Formatea número como $XX.XXX.XXX COP
+    │
+    └── features/
+        ├── home/                         # Landing: hero + stats + lotes destacados
+        ├── proyecto/                     # Página estática del proyecto
+        ├── lotes/
+        │   ├── lista/                    # Catálogo con filtros y ordenamiento
+        │   └── detalle/                  # Ficha completa: galería, servicios, CTA
+        ├── contacto/                     # Formulario de contacto público
+        ├── not-found/                    # 404
+        └── admin/
+            ├── login/                    # Pantalla de acceso
+            ├── layout/                   # Shell: sidebar + header responsive
+            ├── dashboard/                # Stats (via /api/lotes/stats) + últimos mensajes
+            ├── lotes/                    # Tabla CRUD + panel lateral con form + upload imagen
+            └── contactos/               # Lista de mensajes, filtro no leídos, marcar/eliminar
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## Rutas
 
-```bash
-ng e2e
-```
+### Públicas
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+| Ruta | Descripción |
+|------|-------------|
+| `/home` | Landing page |
+| `/proyecto` | Información del proyecto |
+| `/lotes` | Catálogo con filtros por estado, área y precio |
+| `/lotes/:id` | Ficha de lote con galería, servicios y CTA WhatsApp |
+| `/contacto` | Formulario de contacto |
 
-## Additional Resources
+### Panel admin (`/admin/*` — requiere JWT activo)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+| Ruta | Descripción |
+|------|-------------|
+| `/admin/login` | Login (no requiere auth) |
+| `/admin/dashboard` | Resumen de estadísticas + mensajes sin leer |
+| `/admin/lotes` | Gestión de lotes: crear, editar, eliminar, subir imagen |
+| `/admin/contactos` | Mensajes recibidos: filtrar no leídos, marcar leído, eliminar |
+
+---
+
+## Autenticación
+
+El JWT se guarda en `sessionStorage` (se limpia al cerrar la pestaña). El `auth.interceptor` lo adjunta automáticamente en todas las requests a `environment.apiUrl`. El guard verifica que el token exista y que el campo `exp` no haya vencido; si falla, redirige a `/admin/login`.
+
+---
+
+## Upload de imágenes
+
+El formulario de lotes sube archivos directamente a `POST /api/upload/imagen` (requiere JWT). La API guarda el archivo en `uploads/` y devuelve la URL completa. Formatos aceptados: JPG, PNG, WebP. Tamaño máximo: 5 MB.
+
+---
+
+## Pendiente antes de producción
+
+1. **Número de WhatsApp** — `src/app/core/config/project.constants.ts`:
+   ```typescript
+   whatsappNumber: '573XXXXXXXXX',
+   whatsappBase:   'https://wa.me/573XXXXXXXXX',
+   ```
+
+2. **Datos de contacto** — reemplazar placeholders `[...]` en:
+   - `src/app/features/contacto/contacto.html`
+   - `src/app/shared/components/footer/footer.html`
