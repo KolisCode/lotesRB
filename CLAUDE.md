@@ -83,4 +83,4 @@ npm run build           # genera dist/lotes-rb/browser/
 # El MCP droplet deploy_project "lotes-rb" hace build + rsync + nginx reload
 ```
 
-Dominio en producción: `lotesrb.kolisevm.online`
+Dominio en producción: `lotesrb.koliscode.com`

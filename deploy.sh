@@ -4,7 +4,7 @@ set -euo pipefail
 REMOTE_HOST="droplet"
 REMOTE_PATH="/var/www/lotesrb"
 PORT=443
-DOMAIN="lotesrb.kolisevm.online"
+DOMAIN="lotesrb.koliscode.com"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 DIST_DIR="$SCRIPT_DIR/dist/lotes-rb/browser"
 
