@@ -67,8 +67,16 @@ src/app/
 
 - Dev: `http://localhost:3001/api`
 - Prod: `/api` (relativo — Nginx hace proxy en el servidor)
-- Auth: JWT de 2h, header `Authorization: Bearer {token}`
-- Token almacenado en `sessionStorage` bajo `rb_admin_token`
+- Auth: access corto + **refresh token**. `login` guarda ambos en `sessionStorage`
+  (`rb_admin_token` / `rb_admin_refresh`). El `authInterceptor` renueva ante 401 (llamada
+  compartida) y reintenta; el `authGuard` también renueva si el access expiró pero hay refresh
+  válido. Si el refresh falla → `logout()` + redirect a `/admin/login`.
+
+## Mapa
+
+`MapaLote` (`shared/components/mapa-lote/`) usa **Leaflet + tiles OSM** (sin API key). Se muestra
+en el detalle de lote cuando hay coordenadas. En prod, si se añade CSP en Nginx hay que permitir
+`img-src *.tile.openstreetmap.org`. CSS de Leaflet cargado vía `angular.json` styles.
 
 ## Contenido autoadministrable (SiteConfig)
 
