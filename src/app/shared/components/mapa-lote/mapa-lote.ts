@@ -22,6 +22,7 @@ export class MapaLote implements AfterViewInit, OnDestroy {
 
   private readonly mapEl = viewChild.required<ElementRef<HTMLDivElement>>('mapEl');
   private map?: L.Map;
+  private resizeTimer?: ReturnType<typeof setTimeout>;
 
   ngAfterViewInit() {
     const coords: L.LatLngExpression = [this.lat(), this.lng()];
@@ -38,10 +39,12 @@ export class MapaLote implements AfterViewInit, OnDestroy {
     if (this.etiqueta()) marker.bindPopup(this.etiqueta());
 
     // El contenedor puede montarse con tamaño 0 (dentro de flex): recalcula al siguiente tick.
-    setTimeout(() => this.map?.invalidateSize(), 0);
+    this.resizeTimer = setTimeout(() => this.map?.invalidateSize(), 0);
   }
 
   ngOnDestroy() {
+    clearTimeout(this.resizeTimer);
     this.map?.remove();
+    this.map = undefined;
   }
 }
