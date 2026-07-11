@@ -7,28 +7,34 @@ export const routes: Routes = [
   // ── Sitio público ──────────────────────────────────────────────────────────
   {
     path: 'home',
+    title: 'TuLote — Tu terreno, tu futuro',
     loadComponent: () => import('./features/home/home').then(m => m.Home),
   },
   {
     path: 'proyecto',
+    title: 'El Proyecto · TuLote',
     loadComponent: () => import('./features/proyecto/proyecto').then(m => m.Proyecto),
   },
   {
     path: 'lotes',
+    title: 'Lotes disponibles · TuLote',
     loadComponent: () => import('./features/lotes/lista/lista').then(m => m.Lista),
   },
   {
     path: 'lotes/:id',
+    title: 'Detalle del lote · TuLote',
     loadComponent: () => import('./features/lotes/detalle/detalle').then(m => m.Detalle),
   },
   {
     path: 'contacto',
+    title: 'Contacto · TuLote',
     loadComponent: () => import('./features/contacto/contacto').then(m => m.Contacto),
   },
 
   // ── Panel de administración ────────────────────────────────────────────────
   {
     path: 'admin/login',
+    title: 'Admin · TuLote',
     loadComponent: () => import('./features/admin/login/login').then(m => m.AdminLogin),
   },
   {
@@ -59,6 +65,7 @@ export const routes: Routes = [
   // ── 404 ───────────────────────────────────────────────────────────────────
   {
     path: '**',
+    title: 'Página no encontrada · TuLote',
     loadComponent: () => import('./features/not-found/not-found').then(m => m.NotFound),
   },
 ];
