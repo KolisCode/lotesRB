@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 
 export interface ContactoPayload {
   nombre: string;
-  email: string;
+  email?: string;
   telefono?: string;
   mensaje: string;
   loteId?: number;

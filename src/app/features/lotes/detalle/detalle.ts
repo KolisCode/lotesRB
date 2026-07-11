@@ -5,7 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LotesService } from '../../../core/services/lotes.service';
 import { PrecioPipe } from '../../../shared/pipes/precio-pipe';
 import { Lote } from '../../../core/models/lote.model';
-import { whatsappUrl } from '../../../core/config/project.constants';
+import { SiteConfigService } from '../../../core/services/site-config.service';
 
 @Component({
   selector: 'app-detalle',
@@ -16,6 +16,7 @@ import { whatsappUrl } from '../../../core/config/project.constants';
 export class Detalle {
   private route = inject(ActivatedRoute);
   private svc   = inject(LotesService);
+  private siteConfig = inject(SiteConfigService);
 
   cargando   = signal(true);
   errorCarga = signal(false);
@@ -59,7 +60,7 @@ export class Detalle {
   get whatsappUrl(): string {
     const l = this._lote();
     const mensaje = `Hola, me interesa el Lote ${l?.numero} (Manzana ${l?.manzana}). ¿Podría darme más información?`;
-    return whatsappUrl(mensaje);
+    return this.siteConfig.whatsappUrl(mensaje);
   }
 
   servicioIconos: Record<string, string> = {

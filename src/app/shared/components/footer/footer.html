@@ -1,8 +1,8 @@
 <footer class="footer">
   <div class="footer__container">
     <div class="footer__brand">
-      <span class="footer__logo">&#9633; LotesRB</span>
-      <p class="footer__tagline">Tu terreno, tu futuro.</p>
+      <span class="footer__logo">&#9633; {{ cfg().marca }}</span>
+      <p class="footer__tagline">{{ cfg().tagline }}</p>
     </div>
 
     <div class="footer__links">
@@ -17,8 +17,8 @@
 
     <div class="footer__contact">
       <h4>Contacto</h4>
-      <p>&#128222; <a [href]="'tel:+' + whatsappNumber">+57 300 000 0000</a></p>
-      <p>&#128205; Colombia</p>
+      <p>&#128222; <a [href]="'tel:+' + cfg().whatsappNumber">{{ cfg().telefono }}</a></p>
+      <p>&#128205; {{ cfg().direccion }}</p>
       <a class="footer__whatsapp"
          [href]="whatsappUrl"
          target="_blank" rel="noopener">

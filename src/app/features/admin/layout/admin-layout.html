@@ -27,6 +27,10 @@
           <span class="admin-nav__badge">{{ noLeidosCount() }}</span>
         }
       </a>
+      <a routerLink="configuracion" routerLinkActive="admin-nav__link--active"
+         class="admin-nav__link" (click)="cerrarSidebar()">
+        <span class="admin-nav__icon">⚙️</span> Configuración
+      </a>
     </nav>
 
     <div class="admin-sidebar__footer">

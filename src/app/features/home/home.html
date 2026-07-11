@@ -2,12 +2,9 @@
 <section class="hero">
   <div class="hero__overlay"></div>
   <div class="hero__content">
-    <p class="hero__eyebrow">Proyecto residencial · Lotes desde 160 m²</p>
-    <h1 class="hero__title">Tu terreno propio,<br>al alcance de tu mano</h1>
-    <p class="hero__subtitle">
-      Lotes con todos los servicios, escrituración garantizada<br>
-      y financiación directa sin banco.
-    </p>
+    <p class="hero__eyebrow">{{ cfg().heroEyebrow }}</p>
+    <h1 class="hero__title">{{ cfg().heroTitulo }}</h1>
+    <p class="hero__subtitle">{{ cfg().heroSubtitulo }}</p>
     <div class="hero__actions">
       <a routerLink="/lotes" class="btn btn--primary">Ver lotes disponibles</a>
       <a routerLink="/proyecto" class="btn btn--outline">Conocer el proyecto</a>
@@ -67,7 +64,7 @@
     </div>
 
     <div class="ventajas-grid">
-      @for (v of ventajas; track v.titulo) {
+      @for (v of cfg().ventajas; track v.titulo) {
         <div class="ventaja">
           <span class="ventaja__icono">{{ v.icono }}</span>
           <h3 class="ventaja__titulo">{{ v.titulo }}</h3>

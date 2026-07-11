@@ -13,6 +13,7 @@ export class AdminContactos implements OnInit {
   cargando    = signal(true);
   error       = signal('');
   soloNoLeidos = signal(false);
+  msgParaEliminar = signal<number | null>(null);
 
   ngOnInit() { this.cargar(); }
 
@@ -32,12 +33,27 @@ export class AdminContactos implements OnInit {
 
   marcarLeido(id: number) {
     this.svc.marcarLeido(id).subscribe({
-      next: updated => {
+      next: () => {
         this.mensajes.update(msgs =>
           msgs.map(m => m.id === id ? { ...m, leido: true } : m)
         );
       },
       error: () => {},
+    });
+  }
+
+  confirmarEliminar(id: number) { this.msgParaEliminar.set(id); }
+  cancelarEliminar()            { this.msgParaEliminar.set(null); }
+
+  eliminar() {
+    const id = this.msgParaEliminar();
+    if (id == null) return;
+    this.svc.remove(id).subscribe({
+      next: () => {
+        this.mensajes.update(msgs => msgs.filter(m => m.id !== id));
+        this.msgParaEliminar.set(null);
+      },
+      error: () => { this.error.set('No se pudo eliminar el mensaje.'); this.msgParaEliminar.set(null); },
     });
   }
 

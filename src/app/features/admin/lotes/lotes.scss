@@ -265,3 +265,22 @@
   font-size: .85rem;
   margin: 0;
 }
+
+.upload-inline {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .5rem;
+
+  &__estado { font-size: .82rem; color: #16a34a; }
+
+  &__preview {
+    display: block;
+    margin-top: .5rem;
+    max-width: 200px;
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+  }
+}

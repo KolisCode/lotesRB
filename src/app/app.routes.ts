@@ -49,6 +49,10 @@ export const routes: Routes = [
         path: 'contactos',
         loadComponent: () => import('./features/admin/contactos/contactos').then(m => m.AdminContactos),
       },
+      {
+        path: 'configuracion',
+        loadComponent: () => import('./features/admin/configuracion/configuracion').then(m => m.AdminConfiguracion),
+      },
     ],
   },
 

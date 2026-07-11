@@ -24,16 +24,18 @@ El backend corre en `lotes-rb-api/` (NestJS, puerto 3001).
 src/app/
 ├── core/
 │   ├── models/lote.model.ts        ← interfaces TypeScript
+│   ├── models/site-config.model.ts ← interfaz SiteConfig + DEFAULT_SITE_CONFIG (respaldo)
 │   ├── services/
 │   │   ├── lotes.service.ts        ← catálogo público
+│   │   ├── site-config.service.ts  ← config pública (signal `config`, whatsappUrl()); reemplazó project.constants
 │   │   ├── admin-auth.service.ts   ← JWT en sessionStorage (clave: rb_admin_token)
 │   │   ├── admin-lotes.service.ts  ← CRUD admin
+│   │   ├── admin-site-config.service.ts ← PUT config + upload de imagen
 │   │   └── admin-contacto.service.ts
 │   ├── guards/auth.guard.ts
-│   ├── interceptors/
-│   │   ├── auth.interceptor.ts     ← inyecta Bearer token
-│   │   └── error.interceptor.ts    ← maneja status 0 (sin conexión)
-│   └── config/project.constants.ts
+│   └── interceptors/
+│       ├── auth.interceptor.ts     ← inyecta Bearer token
+│       └── error.interceptor.ts    ← maneja status 0 (sin conexión)
 ├── features/                       ← lazy loaded con loadComponent()
 │   ├── home/
 │   ├── lotes/lista/ y detalle/
@@ -43,7 +45,8 @@ src/app/
 │   │   ├── login/
 │   │   ├── dashboard/
 │   │   ├── lotes/
-│   │   └── contactos/
+│   │   ├── contactos/
+│   │   └── configuracion/          ← edita SiteConfig: contacto, marca, hero, ventajas, imagen
 │   └── not-found/
 └── shared/components/
     ├── navbar/
@@ -67,10 +70,19 @@ src/app/
 - Auth: JWT de 2h, header `Authorization: Bearer {token}`
 - Token almacenado en `sessionStorage` bajo `rb_admin_token`
 
+## Contenido autoadministrable (SiteConfig)
+
+Casi todo el contenido del sitio público se edita desde **admin → Configuración** y se sirve
+por `GET /api/site-config` (consumido vía `SiteConfigService`, signal `config`):
+contacto/WhatsApp, branding, hero, ventajas, y **toda la página Proyecto** (municipio, nombre,
+descripción, `distancias[]`, `infraestructura[]`, `pasos[]`, financiación). Ya no hay textos
+`[placeholder]` hardcodeados. Los defaults de respaldo viven en `core/models/site-config.model.ts`.
+
 ## Campos de lote con coordenadas
 
 El modelo tiene `latitud` y `longitud` en DB, DTO y servicio — **mapeados pero no visualizados**.
-La vista `proyecto.html` tiene un SVG placeholder. Pendiente: integrar `@angular/google-maps`.
+`proyecto.html` tiene un SVG placeholder (el nombre del proyecto sí es dinámico). Pendiente:
+integrar un mapa real (`@angular/google-maps` o Leaflet).
 
 ## Estado de tests
 

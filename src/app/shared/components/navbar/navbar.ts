@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { SiteConfigService } from '../../../core/services/site-config.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,6 +9,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar.scss',
 })
 export class Navbar {
+  readonly cfg = inject(SiteConfigService).config;
   menuAbierto = signal(false);
 
   toggleMenu() {

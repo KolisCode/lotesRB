@@ -57,18 +57,33 @@
 
           <p class="msg-card__mensaje">{{ m.mensaje }}</p>
 
-          @if (!m.leido) {
-            <div class="msg-card__footer">
+          <div class="msg-card__footer">
+            @if (!m.leido) {
               <button class="btn-leido" (click)="marcarLeido(m.id)">
                 ✓ Marcar como leído
               </button>
-            </div>
-          } @else {
-            <p class="msg-card__leido-label">Leído</p>
-          }
+            } @else {
+              <span class="msg-card__leido-label">Leído</span>
+            }
+            <button class="btn-eliminar" (click)="confirmarEliminar(m.id)">
+              🗑 Eliminar
+            </button>
+          </div>
 
         </div>
       }
+    </div>
+  }
+
+  @if (msgParaEliminar() !== null) {
+    <div class="confirm-overlay" (click)="cancelarEliminar()">
+      <div class="confirm-box" (click)="$event.stopPropagation()">
+        <p>¿Eliminar este mensaje de contacto? Esta acción no se puede deshacer.</p>
+        <div class="confirm-box__actions">
+          <button class="btn-cancelar" (click)="cancelarEliminar()">Cancelar</button>
+          <button class="btn-eliminar" (click)="eliminar()">Eliminar</button>
+        </div>
+      </div>
     </div>
   }
 

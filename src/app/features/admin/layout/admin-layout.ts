@@ -15,18 +15,12 @@ export class AdminLayout implements OnInit {
   private router     = inject(Router);
 
   sidebarOpen   = signal(false);
-  noLeidosCount = signal(0);
+  /** Signal compartido con la pantalla de contactos: se refresca al marcar leído / eliminar. */
+  readonly noLeidosCount = this.contactoSvc.noLeidos;
 
   get adminNombre() { return this.auth.admin()?.nombre ?? 'Admin'; }
 
-  ngOnInit() { this.fetchNoLeidos(); }
-
-  fetchNoLeidos() {
-    this.contactoSvc.getAll(true).subscribe({
-      next: msgs => this.noLeidosCount.set(msgs.length),
-      error: () => {},
-    });
-  }
+  ngOnInit() { this.contactoSvc.refreshNoLeidos(); }
 
   cerrarSidebar() { this.sidebarOpen.set(false); }
 

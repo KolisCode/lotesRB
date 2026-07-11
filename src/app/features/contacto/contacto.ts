@@ -1,15 +1,17 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { whatsappUrl } from '../../core/config/project.constants';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { catchError, of } from 'rxjs';
 import { ContactoService } from '../../core/services/contacto.service';
+import { LotesService } from '../../core/services/lotes.service';
+import { SiteConfigService } from '../../core/services/site-config.service';
 
 interface FormData {
   nombre: string;
   telefono: string;
   email: string;
-  interes: string;
+  loteId: number | null;
   mensaje: string;
 }
 
@@ -21,32 +23,38 @@ interface FormData {
 })
 export class Contacto {
   private contactoSvc = inject(ContactoService);
+  private lotesSvc    = inject(LotesService);
+  private siteConfig  = inject(SiteConfigService);
   private destroyRef  = inject(DestroyRef);
+
+  readonly cfg = this.siteConfig.config;
+
+  /** Lotes reales para el select "¿Qué lote te interesa?". */
+  readonly lotes = toSignal(
+    this.lotesSvc.getAll().pipe(catchError(() => of([]))),
+    { initialValue: [] },
+  );
 
   enviado    = signal(false);
   enviando   = signal(false);
   errorEnvio = signal(false);
 
-  readonly whatsappUrl = whatsappUrl('Hola, me interesa un lote');
+  get whatsappUrl() { return this.siteConfig.whatsappUrl('Hola, me interesa un lote'); }
 
   form: FormData = {
-    nombre: '', telefono: '', email: '', interes: '', mensaje: '',
+    nombre: '', telefono: '', email: '', loteId: null, mensaje: '',
   };
 
   onSubmit() {
     this.enviando.set(true);
     this.errorEnvio.set(false);
 
-    const mensajeCompleto = [
-      this.form.interes ? `Interés: ${this.form.interes}` : '',
-      this.form.mensaje,
-    ].filter(Boolean).join('\n') || 'Sin mensaje adicional.';
-
     this.contactoSvc.enviar({
       nombre:   this.form.nombre.trim(),
-      email:    this.form.email.trim(),
+      email:    this.form.email.trim() || undefined,
       telefono: this.form.telefono.trim() || undefined,
-      mensaje:  mensajeCompleto,
+      mensaje:  this.form.mensaje.trim() || 'Sin mensaje adicional.',
+      loteId:   this.form.loteId ?? undefined,
     }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: () => {
         this.enviando.set(false);
@@ -62,6 +70,6 @@ export class Contacto {
   resetForm() {
     this.enviado.set(false);
     this.errorEnvio.set(false);
-    this.form = { nombre: '', telefono: '', email: '', interes: '', mensaje: '' };
+    this.form = { nombre: '', telefono: '', email: '', loteId: null, mensaje: '' };
   }
 }

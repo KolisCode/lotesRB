@@ -88,11 +88,19 @@
       </textarea>
     </div>
 
-    <!-- Imagen URL -->
+    <!-- Imagen: subir archivo o pegar URL -->
     <div class="campo">
-      <label class="campo__label" for="imagen">URL de imagen</label>
+      <label class="campo__label" for="imagen">Imagen del lote</label>
+      <div class="upload-inline">
+        <input type="file" accept="image/jpeg,image/png,image/webp"
+          (change)="onArchivo($event)" [disabled]="subiendoImg()" />
+        @if (subiendoImg()) { <span class="upload-inline__estado">Subiendo…</span> }
+      </div>
       <input class="campo__input" id="imagen" name="imagen" type="url"
-        placeholder="https://…" [(ngModel)]="form.imagen" maxlength="500" />
+        placeholder="…o pega una URL https://" [(ngModel)]="form.imagen" maxlength="500" />
+      @if (form.imagen) {
+        <img class="upload-inline__preview" [src]="form.imagen" alt="Vista previa del lote" />
+      }
     </div>
 
     <div class="form-row">

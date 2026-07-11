@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminLotesService, LoteAdmin, LotePayload } from '../../../core/services/admin-lotes.service';
+import { UploadService } from '../../../core/services/upload.service';
 
 export const SERVICIOS_OPCIONES = [
   { nombre: 'Agua potable',      icono: 'water' },
@@ -33,6 +34,7 @@ interface LoteForm {
 })
 export class AdminLotes implements OnInit {
   private svc = inject(AdminLotesService);
+  private uploadSvc = inject(UploadService);
 
   readonly SERVICIOS = SERVICIOS_OPCIONES;
 
@@ -42,6 +44,7 @@ export class AdminLotes implements OnInit {
   panelAbierto     = signal(false);
   guardando        = signal(false);
   errorGuardar     = signal('');
+  subiendoImg      = signal(false);
   loteEditando     = signal<LoteAdmin | null>(null);
   loteParaEliminar = signal<number | null>(null);
 
@@ -85,6 +88,22 @@ export class AdminLotes implements OnInit {
   }
 
   cerrarPanel() { this.panelAbierto.set(false); }
+
+  onArchivo(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+    this.subiendoImg.set(true);
+    this.errorGuardar.set('');
+    this.uploadSvc.uploadImagen(file).subscribe({
+      next: ({ url }) => { this.form.imagen = url; this.subiendoImg.set(false); },
+      error: (err) => {
+        this.subiendoImg.set(false);
+        this.errorGuardar.set(err?.error?.message ?? 'No se pudo subir la imagen.');
+      },
+    });
+    input.value = '';
+  }
 
   toggleServicio(icono: string) {
     const arr = this.form.serviciosSeleccionados;

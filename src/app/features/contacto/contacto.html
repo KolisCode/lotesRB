@@ -88,17 +88,18 @@
 
             <!-- Lote de interés -->
             <div class="campo">
-              <label class="campo__label" for="interes">¿Qué lote te interesa?</label>
+              <label class="campo__label" for="loteId">¿Qué lote te interesa?</label>
               <select
                 class="campo__select"
-                id="interes"
-                name="interes"
-                [(ngModel)]="form.interes">
-                <option value="">Aún no lo sé / cualquier disponible</option>
-                <option value="manzana-a">Manzana A</option>
-                <option value="manzana-b">Manzana B</option>
-                <option value="manzana-c">Manzana C</option>
-                <option value="otro">Otro / varios</option>
+                id="loteId"
+                name="loteId"
+                [(ngModel)]="form.loteId">
+                <option [ngValue]="null">Aún no lo sé / cualquier disponible</option>
+                @for (lote of lotes(); track lote.id) {
+                  <option [ngValue]="lote.id">
+                    Lote {{ lote.numero }} — Manzana {{ lote.manzana }} ({{ lote.estado }})
+                  </option>
+                }
               </select>
             </div>
 
@@ -155,7 +156,7 @@
           <span class="whatsapp-card__icono">💬</span>
           <div>
             <strong>Escríbenos por WhatsApp</strong>
-            <span>Respuesta inmediata · [+57 300 000 0000]</span>
+            <span>Respuesta inmediata · {{ cfg().telefono }}</span>
           </div>
           <span class="whatsapp-card__flecha">→</span>
         </a>
@@ -169,28 +170,28 @@
               <span class="datos-card__icono">📞</span>
               <div>
                 <span class="datos-card__label">Teléfono</span>
-                <span class="datos-card__valor">[+57 300 000 0000]</span>
+                <span class="datos-card__valor">{{ cfg().telefono }}</span>
               </div>
             </li>
             <li class="datos-card__item">
               <span class="datos-card__icono">✉️</span>
               <div>
                 <span class="datos-card__label">Correo</span>
-                <span class="datos-card__valor">[correo@ejemplo.com]</span>
+                <span class="datos-card__valor">{{ cfg().email }}</span>
               </div>
             </li>
             <li class="datos-card__item">
               <span class="datos-card__icono">📍</span>
               <div>
                 <span class="datos-card__label">Dirección / punto de venta</span>
-                <span class="datos-card__valor">[Dirección del proyecto o punto de atención]</span>
+                <span class="datos-card__valor">{{ cfg().direccion }}</span>
               </div>
             </li>
             <li class="datos-card__item">
               <span class="datos-card__icono">🕐</span>
               <div>
                 <span class="datos-card__label">Horario de atención</span>
-                <span class="datos-card__valor">Lunes a sábado · [8:00 a.m. – 6:00 p.m.]</span>
+                <span class="datos-card__valor">{{ cfg().horario }}</span>
               </div>
             </li>
           </ul>

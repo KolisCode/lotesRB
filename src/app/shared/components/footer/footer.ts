@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PROJECT, whatsappUrl } from '../../../core/config/project.constants';
+import { SiteConfigService } from '../../../core/services/site-config.service';
 
 @Component({
   selector: 'app-footer',
@@ -9,7 +9,9 @@ import { PROJECT, whatsappUrl } from '../../../core/config/project.constants';
   styleUrl: './footer.scss',
 })
 export class Footer {
+  private siteConfig = inject(SiteConfigService);
+  readonly cfg = this.siteConfig.config;
   year = new Date().getFullYear();
-  readonly whatsappUrl = whatsappUrl('Hola, me interesa información sobre los lotes');
-  readonly whatsappNumber = PROJECT.whatsappNumber;
+
+  get whatsappUrl() { return this.siteConfig.whatsappUrl('Hola, me interesa información sobre los lotes'); }
 }

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { whatsappUrl } from '../../core/config/project.constants';
+import { SiteConfigService } from '../../core/services/site-config.service';
 
 @Component({
   selector: 'app-proyecto',
@@ -9,5 +9,9 @@ import { whatsappUrl } from '../../core/config/project.constants';
   styleUrl: './proyecto.scss',
 })
 export class Proyecto {
-  readonly whatsappUrl = whatsappUrl('Hola, quiero info sobre el proyecto');
+  private siteConfig = inject(SiteConfigService);
+
+  readonly cfg = this.siteConfig.config;
+
+  get whatsappUrl() { return this.siteConfig.whatsappUrl('Hola, quiero info sobre el proyecto'); }
 }
