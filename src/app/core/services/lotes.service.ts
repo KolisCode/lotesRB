@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 interface LoteApiResponse {
   id: number;
   numero: string;
+  slug: string | null;
   manzana: string;
   area: number;
   precio: number;
@@ -35,6 +36,12 @@ export class LotesService {
     );
   }
 
+  getBySlug(slug: string) {
+    return this.http.get<LoteApiResponse>(`${environment.apiUrl}/lotes/slug/${slug}`).pipe(
+      map(l => this.mapLote(l))
+    );
+  }
+
   // Funciones puras para derivar datos de una lista cargada
   calcResumen(lotes: Lote[]) {
     return {
@@ -59,6 +66,7 @@ export class LotesService {
     return {
       id:          l.id,
       numero:      l.numero,
+      slug:        l.slug ?? String(l.id),
       manzana:     l.manzana,
       area:        l.area,
       precio:      l.precio,

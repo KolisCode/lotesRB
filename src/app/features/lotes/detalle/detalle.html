@@ -110,7 +110,7 @@
         <h2 class="relacionados__titulo">Otros lotes en Manzana {{ lote.manzana }}</h2>
         <div class="relacionados__grid">
           @for (r of relacionados; track r.id) {
-            <a [routerLink]="['/lotes', r.id]" class="rel-card">
+            <a [routerLink]="['/lotes', r.slug]" class="rel-card">
               <div class="rel-card__media">
                 @if (!r.imagen) {
                   <div class="rel-card__placeholder"></div>

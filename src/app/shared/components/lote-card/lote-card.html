@@ -70,7 +70,7 @@
 
     <!-- CTA -->
     @if (lote().estado === 'disponible') {
-      <a [routerLink]="['/lotes', lote().id]" class="lote-card__cta">
+      <a [routerLink]="['/lotes', lote().slug]" class="lote-card__cta">
         Ver detalle <span>→</span>
       </a>
     } @else {

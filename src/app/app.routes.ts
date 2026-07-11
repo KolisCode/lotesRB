@@ -21,7 +21,7 @@ export const routes: Routes = [
     loadComponent: () => import('./features/lotes/lista/lista').then(m => m.Lista),
   },
   {
-    path: 'lotes/:id',
+    path: 'lotes/:slug',
     title: 'Detalle del lote · TuLote',
     loadComponent: () => import('./features/lotes/detalle/detalle').then(m => m.Detalle),
   },

@@ -1,5 +1,5 @@
 import { Component, inject, signal, computed } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { catchError, EMPTY, forkJoin, of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LotesService } from '../../../core/services/lotes.service';
@@ -15,8 +15,9 @@ import { MapaLote } from '../../../shared/components/mapa-lote/mapa-lote';
   styleUrl: './detalle.scss',
 })
 export class Detalle {
-  private route = inject(ActivatedRoute);
-  private svc   = inject(LotesService);
+  private route  = inject(ActivatedRoute);
+  private router = inject(Router);
+  private svc    = inject(LotesService);
   private siteConfig = inject(SiteConfigService);
 
   cargando   = signal(true);
@@ -35,10 +36,13 @@ export class Detalle {
   });
 
   constructor() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const param = this.route.snapshot.paramMap.get('slug') ?? '';
+    const esNumerico = /^\d+$/.test(param);
+    // Compatibilidad: /lotes/1 (id viejo) resuelve por id y luego redirige al slug canónico.
+    const lote$ = esNumerico ? this.svc.getById(Number(param)) : this.svc.getBySlug(param);
 
     forkJoin({
-      lote: this.svc.getById(id),
+      lote: lote$,
       todos: this.svc.getAll().pipe(catchError(() => of([]))),
     }).pipe(
       catchError(() => {
@@ -48,10 +52,13 @@ export class Detalle {
       }),
       takeUntilDestroyed(),
     ).subscribe(({ lote, todos }) => {
+      if (esNumerico && lote.slug) {
+        this.router.navigate(['/lotes', lote.slug], { replaceUrl: true });
+      }
       this._lote.set(lote);
       this._relacionados.set(
         todos
-          .filter(l => l.manzana === lote.manzana && l.id !== id && l.estado === 'disponible')
+          .filter(l => l.manzana === lote.manzana && l.id !== lote.id && l.estado === 'disponible')
           .slice(0, 3),
       );
       this.cargando.set(false);
