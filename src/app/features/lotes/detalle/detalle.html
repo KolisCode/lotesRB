@@ -93,6 +93,17 @@
       </ul>
     </div>
 
+    <!-- Ubicación en el mapa -->
+    @if (lote.coordenadas) {
+      <div class="ubicacion-mapa">
+        <h2 class="ubicacion-mapa__titulo">Ubicación</h2>
+        <app-mapa-lote
+          [lat]="lote.coordenadas.lat"
+          [lng]="lote.coordenadas.lng"
+          [etiqueta]="'Lote ' + lote.numero + ' · Manzana ' + lote.manzana" />
+      </div>
+    }
+
     <!-- Lotes relacionados -->
     @if (relacionados.length > 0) {
       <div class="relacionados">

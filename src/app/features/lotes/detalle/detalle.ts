@@ -6,10 +6,11 @@ import { LotesService } from '../../../core/services/lotes.service';
 import { PrecioPipe } from '../../../shared/pipes/precio-pipe';
 import { Lote } from '../../../core/models/lote.model';
 import { SiteConfigService } from '../../../core/services/site-config.service';
+import { MapaLote } from '../../../shared/components/mapa-lote/mapa-lote';
 
 @Component({
   selector: 'app-detalle',
-  imports: [RouterLink, PrecioPipe],
+  imports: [RouterLink, PrecioPipe, MapaLote],
   templateUrl: './detalle.html',
   styleUrl: './detalle.scss',
 })
