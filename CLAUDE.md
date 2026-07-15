@@ -3,6 +3,12 @@
 Sistema de catálogo y venta de lotes inmobiliarios. Frontend en Angular 21 + Tailwind 4.
 El backend corre en `lotes-rb-api/` (NestJS, puerto 3001).
 
+> **Marca de producto: "TuLote"** (lema "Tu terreno, tu futuro"). La marca visible sale de
+> `SiteConfig.marca` (editable en el admin); los metadatos estáticos en `index.html`
+> (`lang="es"`, title, `meta description`, Open Graph/Twitter, favicon SVG en `public/favicon.svg`)
+> y el `title` por ruta (campo `title` en `app.routes.ts`) dicen "TuLote". Repos/dominio siguen
+> como `lotesRB` / `lotesrb.koliscode.com`.
+
 **Instrucción:** Mantén este archivo actualizado de forma proactiva. Si en una conversación surge información útil — decisiones de arquitectura, convenciones nuevas, cambios de rutas — actualiza la sección correspondiente.
 
 ---
@@ -86,15 +92,25 @@ contacto/WhatsApp, branding, hero, ventajas, y **toda la página Proyecto** (mun
 descripción, `distancias[]`, `infraestructura[]`, `pasos[]`, financiación). Ya no hay textos
 `[placeholder]` hardcodeados. Los defaults de respaldo viven en `core/models/site-config.model.ts`.
 
-## Campos de lote con coordenadas
+## URLs de lote (slug)
 
-El modelo tiene `latitud` y `longitud` en DB, DTO y servicio — **mapeados pero no visualizados**.
-`proyecto.html` tiene un SVG placeholder (el nombre del proyecto sí es dinámico). Pendiente:
-integrar un mapa real (`@angular/google-maps` o Leaflet).
+El detalle **no expone el id** en la URL: usa un slug descriptivo `/lotes/lote-a-01-sector-norte-...`
+(campo `Lote.slug`, generado en backend). `lote-card` y relacionados enlazan por `lote.slug`; el
+detalle acepta también el id numérico viejo (`/lotes/1`) y **redirige** (replaceUrl) al slug canónico
+vía `router.navigate(..., {replaceUrl:true})`. Servicios: `LotesService.getBySlug()` /
+`getById()`. Ruta: `lotes/:slug`.
+
+## Coordenadas / mapa de lote
+
+`latitud`/`longitud` del lote se **visualizan** con `MapaLote` (Leaflet + OSM, ver sección Mapa)
+en el detalle cuando existen. En prod hay coords ficticias sembradas (grilla cerca de Villavicencio).
+`proyecto.html` mantiene un SVG placeholder aparte (no es el mapa Leaflet).
 
 ## Estado de tests
 
-9 archivos `.spec.ts` existen pero contienen solo el boilerplate de Angular. Sin cobertura real.
+Vitest (`ng test`). Cobertura real en `core/services/site-config.service.spec.ts` (4 casos). Se
+eliminaron los 9 stubs `should create` autogenerados que fallaban sin aportar. Pendiente: ampliar a
+componentes/otros services.
 
 ## Deploy
 
